@@ -24,3 +24,7 @@ Route::post('/posts', 'PostsController@store')->name('post.store');
 Route::get('/posts/{post}', 'PostsController@show')->name('post.show');
 
 Route::resource('/tasks', 'TasksController');
+
+Route::post('/tasks/{task}/step', 'TaskStepsController@store')->name('steps.store');
+Route::post('/completed-steps/{step}', 'CompletedStepsController@store')->name('completed-steps.store');
+Route::delete('/completed-steps/{step}', 'CompletedStepsController@destroy')->name('completed-steps.destroy');

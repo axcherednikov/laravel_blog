@@ -21,6 +21,55 @@
         </form>
         <hr>
 
+        <h4>Шаги выполнения задачи:</h4>
+        <br>
+        @if($task->steps->isNotEmpty())
+            <ul class="list-group">
+                @foreach($task->steps as $step)
+                    <li class="list-group-item">
+                        <form method="post" action="{{ route('completed-steps.store', ['step' => $step->id], false) }}">
+
+                            @if ($step->completed)
+                                @method('DELETE')
+                            @endif
+
+                            <div class="form-check">
+                                @csrf
+
+                                <label class="form-check-label {{ $step->completed ? 'completed' : '' }}">
+                                    <input
+                                        type="checkbox"
+                                        class="form-check-input"
+                                        name="completed"
+                                        onclick="this.form.submit()"
+                                        {{ $step->completed ? 'checked' : '' }}
+                                    >
+                                    <span>{{ $step->description }}</span>
+                                </label>
+                            </div>
+                        </form>
+                    </li>
+                @endforeach
+            </ul>
+        @endif
+
+        <form class="card card-body mb-4" action="{{ route('steps.store', ['task' => $task->id], false) }}"
+              method="POST">
+            @csrf
+
+            <div class="form-group">
+                <input
+                    type="text" class="form-control"
+                    placeholder="Шаг" name="description"
+                    value="{{ old('description') }}"
+                >
+            </div>
+
+            <button type="submit" class="btn btn-primary">Отправить</button>
+            @include('layout.errors')
+        </form>
+
+        <br><br>
         <a href="{{ route('tasks.index', [], false) }}">Вернуться к списку задач.</a>
     </div>
 
