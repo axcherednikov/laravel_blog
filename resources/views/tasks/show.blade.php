@@ -9,9 +9,19 @@
 
         {{ $task->body }}
 
-        <br><hr>
+        <br><br>
+        <form method="post" action="{{ route('tasks.destroy', ['task' => $task->id], false) }}">
 
-        <a href="/tasks">Вернуться к списку задач.</a>
+            @csrf
+            @method('DELETE')
+
+            <a class="btn btn-primary" href="{{ route('tasks.edit', ['task' => $task->id], false) }}" role="button">Изменить</a>
+            <button class="btn btn-danger" type="submit">Удалить</button>
+
+        </form>
+        <hr>
+
+        <a href="{{ route('tasks.index', [], false) }}">Вернуться к списку задач.</a>
     </div>
 
 @endsection
