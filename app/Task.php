@@ -4,6 +4,8 @@ namespace App;
 
 class Task extends Model
 {
+    protected $fillable = ['title', 'body'];
+
     public function getRouteKeyName()
     {
         return 'id';

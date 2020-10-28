@@ -7,6 +7,10 @@
             Список задач
         </h3>
 
+        <a class="btn btn-primary" href="{{ route('tasks.create', [], false) }}" role="button">Новая задача</a>
+        <br><br>
+        <hr>
+
         @foreach($tasks as $task)
             @include('tasks.item')
         @endforeach
