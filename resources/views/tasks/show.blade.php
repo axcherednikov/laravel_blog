@@ -7,6 +7,8 @@
             {{ $task->title }}
         </h3>
 
+        @include('tasks.tags', ['tags' => $task->tags])
+
         {{ $task->body }}
 
         <br><br>
