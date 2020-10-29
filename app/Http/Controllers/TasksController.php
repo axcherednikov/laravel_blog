@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Tag;
 use App\Task;
+use Illuminate\Database\Eloquent\Collection;
 
 class TasksController extends Controller
 {
@@ -48,6 +50,33 @@ class TasksController extends Controller
         ]);
 
         $task->update($validatedData);
+
+        /** @var Collection $taskTags */
+        $taskTags = $task->tags->keyBy('name');
+
+        $tags = collect(explode(',', request('tags')))->keyBy(fn ($item) => $item);
+
+        $syncIds = $taskTags->intersectByKeys($tags)->pluck('id')->toArray();
+
+        $tagsToAttach = $tags->diffKeys($taskTags);
+
+//        $tagsToDetach = $taskTags->diffKeys($tags);
+//
+//        foreach ($tagsToAttach as $tag) {
+//            $tag = Tag::firstOrCreate(['name' => $tag]);
+//            $task->tags()->attach($tag);
+//        }
+//
+//        foreach ($tagsToDetach as $tag) {
+//            $task->tags()->detach($tag);
+//        }
+
+        foreach ($tagsToAttach as $tag) {
+            $tag = Tag::firstOrCreate(['name' => $tag]);
+            $syncIds[] = $tag->id;
+        }
+
+        $task->tags()->sync($syncIds);
 
         return redirect()->route('tasks.index');
     }
