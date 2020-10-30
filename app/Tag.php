@@ -12,4 +12,14 @@ class Tag extends Model
     {
         return $this->belongsToMany(Task::class);
     }
+
+    public function getRouteKeyName()
+    {
+        return 'name';
+    }
+
+    public static function tagsCloud()
+    {
+        return (new static)->has('tasks')->get();
+    }
 }

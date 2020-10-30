@@ -6,7 +6,7 @@
             </div>
 
             <div class="col-4 text-center">
-                <a class="blog-header-logo text-dark" href="#">Large</a>
+                <a class="blog-header-logo text-dark" href="#">Laravel Blog</a>
             </div>
 
             <div class="col-4 d-flex justify-content-end align-items-center">
