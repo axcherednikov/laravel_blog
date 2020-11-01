@@ -6,7 +6,7 @@
             </div>
 
             <div class="col-4 text-center">
-                <a class="blog-header-logo text-dark" href="#">Laravel Blog</a>
+                <a class="blog-header-logo text-dark" href="{{ route('home', [], false) }}">{{ config('app.name') }}</a>
             </div>
 
             <div class="col-4 d-flex justify-content-end align-items-center">
