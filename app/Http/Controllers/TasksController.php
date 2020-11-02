@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\TaskCreated;
 use App\Tag;
 use App\Task;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Mail;
 
 class TasksController extends Controller
 {
@@ -40,7 +42,7 @@ class TasksController extends Controller
 
         $validatedData['owner_id'] = auth()->id();
 
-        Task::create($validatedData);
+        $task = Task::create($validatedData);
 
         return redirect()->route('tasks.index');
     }
