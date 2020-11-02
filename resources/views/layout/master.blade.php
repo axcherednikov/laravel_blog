@@ -17,12 +17,14 @@
 
 @include('layout.nav')
 
-<main role="main" class="container">
+<main role="main" class="container py-4">
     <div class="row">
 
         @yield('content')
 
-        @include('layout.sidebar')
+        @section('sidebar')
+            @include('layout.sidebar')
+        @show
 
     </div><!-- /.row -->
 </main><!-- /.container -->

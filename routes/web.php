@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/about', function () {
@@ -30,3 +31,5 @@ Route::get('/tasks/tags/{tag}', 'TagsController@index')->name('tags.index');
 Route::post('/tasks/{task}/step', 'TaskStepsController@store')->name('steps.store');
 Route::post('/completed-steps/{step}', 'CompletedStepsController@store')->name('completed-steps.store');
 Route::delete('/completed-steps/{step}', 'CompletedStepsController@destroy')->name('completed-steps.destroy');
+
+Auth::routes();

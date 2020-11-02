@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
-    protected $fillable = ['title', 'body'];
+    protected $fillable = ['owner_id', 'title', 'body'];
 
     public function getRouteKeyName()
     {

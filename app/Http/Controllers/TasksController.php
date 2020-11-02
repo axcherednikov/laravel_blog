@@ -8,9 +8,15 @@ use Illuminate\Database\Eloquent\Collection;
 
 class TasksController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('can:update,task')->except(['index', 'store', 'create']);
+    }
+
     public function index()
     {
-        $tasks = Task::with('tags')->latest()->get();
+        $tasks = auth()->user()->tasks()->with('tags')->latest()->get();
 
         return view('tasks.index', compact('tasks'));
     }
@@ -31,6 +37,8 @@ class TasksController extends Controller
             'title' => 'required',
             'body'  => 'required',
         ]);
+
+        $validatedData['owner_id'] = auth()->id();
 
         Task::create($validatedData);
 
