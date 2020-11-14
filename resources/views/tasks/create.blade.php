@@ -9,7 +9,7 @@
 
         @include('layout.errors')
 
-        <form method="post" action="/tasks">
+        <form method="post" action="{{ route('tasks.store', [], false) }}">
 
             @csrf
 
@@ -20,8 +20,7 @@
             </div>
             <div class="form-group">
                 <label for="inputBody">Описание задачи</label>
-                <input type="text" class="form-control" id="inputBody" name="body" placeholder="Введите описание"
-                       value="{{ old('body') }}">
+                <textarea class="form-control" name="body" id="inputBody" >{{ old('body') }}</textarea>
             </div>
 
             <button type="submit" class="btn btn-primary">Создать задачу</button>

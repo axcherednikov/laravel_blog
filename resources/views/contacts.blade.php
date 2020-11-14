@@ -15,7 +15,7 @@
 
         @include('layout.errors')
 
-        <form method="post" action="/contacts">
+        <form method="post" action="{{ route('feedback.store', [], false) }}">
 
             @csrf
 

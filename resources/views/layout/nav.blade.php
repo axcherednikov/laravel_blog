@@ -6,7 +6,7 @@
             </div>
 
             <div class="col-4 text-center">
-                <a class="blog-header-logo text-dark" href="#">Large</a>
+                <a class="blog-header-logo text-dark" href="{{ route('home', [], false) }}">{{ config('app.name') }}</a>
             </div>
 
             <div class="col-4 d-flex justify-content-end align-items-center">
@@ -18,7 +18,30 @@
                         <path d="M21 21l-5.2-5.2"/>
                     </svg>
                 </a>
-                <a class="btn btn-sm btn-outline-secondary" href="#">Sign up</a>
+                @guest
+                    <a class="btn btn-sm btn-outline-secondary" href="{{ route('login') }}">{{ __('Login') }}</a>
+
+                    @if (Route::has('register'))
+                        <a class="btn btn-sm btn-outline-secondary" href="{{ route('register') }}">{{ __('Register') }}</a>
+                    @endif
+                @else
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        {{ Auth::user()->name }}
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                            {{ __('Logout') }}
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </div>
+                @endguest
             </div>
 
         </div>
@@ -27,6 +50,7 @@
     <div class="nav-scroller py-1 mb-2">
         <nav class="nav d-flex justify-content-between">
             <a class="p-2 text-muted" href="/">Главная</a>
+            <a class="p-2 text-muted" href="/tasks">Задачи</a>
             <a class="p-2 text-muted" href="/about">О нас</a>
             <a class="p-2 text-muted" href="/contacts">Контакты</a>
             <a class="p-2 text-muted" href="/posts/create">Создать статью</a>
