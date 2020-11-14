@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\TaskCreated;
 use App\Tag;
 use App\Task;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Mail;
 
 class TasksController extends Controller
 {
@@ -42,7 +40,9 @@ class TasksController extends Controller
 
         $validatedData['owner_id'] = auth()->id();
 
-        $task = Task::create($validatedData);
+        Task::create($validatedData);
+
+        flash('Задача успешно создана');
 
         return redirect()->route('tasks.index');
     }
@@ -88,12 +88,16 @@ class TasksController extends Controller
 
         $task->tags()->sync($syncIds);
 
+        flash('Задача успешно обновлена');
+
         return redirect()->route('tasks.index');
     }
 
     public function destroy(Task $task)
     {
         $task->delete();
+
+        flash('Задача удалена', 'warning');
 
         return redirect()->route('tasks.index');
     }

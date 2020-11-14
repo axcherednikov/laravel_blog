@@ -11,14 +11,20 @@
         <br><br>
         <hr>
 
-        @foreach($tasks as $task)
-            @include('tasks.item')
-        @endforeach
+        @if($tasks->isNotEmpty())
+            @foreach($tasks as $task)
+                @include('tasks.item')
+            @endforeach
+        @else
+            <h3>Задача ещё не создана</h3>
+        @endif
 
+{{--
         <nav class="blog-pagination">
             <a class="btn btn-outline-primary" href="#">Older</a>
             <a class="btn btn-outline-secondary disabled" href="#" tabindex="-1" aria-disabled="true">Newer</a>
         </nav>
+        --}}
     </div>
 
 @endsection
