@@ -17,6 +17,10 @@
 
 @include('layout.nav')
 
+<div class="container">
+    @include('layout.flash_message')
+</div>
+
 <main role="main" class="container py-4">
     <div class="row">
 

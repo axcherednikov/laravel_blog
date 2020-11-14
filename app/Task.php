@@ -2,24 +2,17 @@
 
 namespace App;
 
-use App\Mail\TaskCreated;
+use App\Events\TaskCreated;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Mail;
 
 class Task extends Model
 {
-    protected $fillable = ['owner_id', 'title', 'body'];
+    protected $guarded = [];
 
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::created(function ($task) {
-            Mail::to($task->owner->email)->send(
-                new TaskCreated($task)
-            );
-        });
-    }
+    protected $dispatchesEvents = [
+        'created' => TaskCreated::class,
+    ];
 
     public function getRouteKeyName()
     {
