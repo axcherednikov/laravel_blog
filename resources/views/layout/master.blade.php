@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>
-        @yield('title')
+        @yield('title', config('app.name'))
     </title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
@@ -17,12 +17,18 @@
 
 @include('layout.nav')
 
-<main role="main" class="container">
+<div class="container">
+    @include('layout.flash_message')
+</div>
+
+<main role="main" class="container py-4">
     <div class="row">
 
         @yield('content')
 
-        @include('layout.sidebar')
+        @section('sidebar')
+            @include('layout.sidebar')
+        @show
 
     </div><!-- /.row -->
 </main><!-- /.container -->
