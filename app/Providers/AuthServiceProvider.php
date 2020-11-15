@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Policies\StepPolicy;
 use App\Policies\TaskPolicy;
+use App\Step;
 use App\Task;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -16,6 +18,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Task::class => TaskPolicy::class,
+        Step::class => StepPolicy::class,
     ];
 
     /**
