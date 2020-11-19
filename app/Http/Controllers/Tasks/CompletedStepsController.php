@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Tasks;
 
+use App\Http\Controllers\Controller;
 use App\Notifications\TaskStepCompleted;
-use App\Step;
+use App\Models\Task\Step;
 
 class CompletedStepsController extends Controller
 {

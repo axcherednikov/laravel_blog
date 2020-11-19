@@ -12,6 +12,8 @@
         <p class="blog-post-meta">{{ $post->updated_at->toFormattedDateString() }}</p>
         <p>{{ $post->body }}</p>
 
+        @include('posts.tags', ['tagsPost' => $post->tags])
+
         <br>
 
         <form action="{{ route('posts.destroy', ['post' => $post->slug], false) }}" method="post">

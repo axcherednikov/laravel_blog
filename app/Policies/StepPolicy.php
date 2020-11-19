@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Step;
-use App\User;
+use App\Models\Task\Step;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class StepPolicy

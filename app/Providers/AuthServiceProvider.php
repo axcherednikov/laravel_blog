@@ -4,10 +4,9 @@ namespace App\Providers;
 
 use App\Policies\StepPolicy;
 use App\Policies\TaskPolicy;
-use App\Step;
-use App\Task;
+use App\Models\Task\Step;
+use App\Models\Task\Task;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {

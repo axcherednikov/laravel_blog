@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Posts;
 
-use App\Post;
+use App\Http\Controllers\Controller;
+use App\Models\Post\Post;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
