@@ -7,6 +7,9 @@
         @include('tasks.tags', ['tagsTask' => $tagsTaskCloud])
         <br>
         <h5>Тэги постов</h5>
+        @php
+
+        @endphp
         @include('posts.tags', ['tagsPost' => $tagsPostCloud])
     </div>
 </aside>

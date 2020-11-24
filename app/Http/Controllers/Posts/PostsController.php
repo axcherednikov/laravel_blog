@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Posts;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post\Post;
+use App\Models\Post\Tag;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
@@ -40,7 +42,14 @@ class PostsController extends Controller
             ? request('slug')
             : Str::of(request('title'))->slug('-', 'en');
 
-        Post::create($validatedData);
+        $post = Post::create($validatedData);
+
+        $tags = collect(explode(',', request('tags')));
+
+        foreach ($tags as $tag) {
+            $tag = Tag::firstOrCreate(['name' => $tag]);
+            $post->tags()->attach($tag);
+        }
 
         flash('Статья успешно создана');
 
@@ -76,6 +85,22 @@ class PostsController extends Controller
             : Str::of(request('title'))->slug('-', 'en');
 
         $post->update($validatedData);
+
+        /** @var Collection $postTags */
+        $postTags = $post->tags->keyBy('name');
+
+        $tags = collect(explode(',', request('tags')))->keyBy(fn ($item) => $item);
+
+        $syncIds = $postTags->intersectByKeys($tags)->pluck('id')->toArray();
+
+        $tagsToAttach = $tags->diffKeys($postTags);
+
+        foreach ($tagsToAttach as $tag) {
+            $tag = Tag::firstOrCreate(['name' => $tag]);
+            $syncIds[] = $tag->id;
+        }
+
+        $post->tags()->sync($syncIds);
 
         flash('Статья успешно обновлена');
 
