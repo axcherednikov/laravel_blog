@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Events;
+namespace App\Events\Posts;
 
-use App\Models\Task\Task;
+use App\Models\Post\Post;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class TaskCreated
+class PostUpdated
 {
     use Dispatchable, SerializesModels;
 
-    public $task;
+    public Post $post;
 
     /**
      * Create a new event instance.
      *
-     * @param Task $task
+     * @param Post $post
      */
-    public function __construct(Task $task)
+    public function __construct(Post $post)
     {
-        $this->task = $task;
+        $this->post = $post;
     }
 }

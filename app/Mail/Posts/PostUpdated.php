@@ -1,26 +1,27 @@
 <?php
 
-namespace App\Mail;
+namespace App\Mail\Posts;
 
-use App\Models\Task\Task;
+use App\Models\Post\Post;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class TaskCreated extends Mailable
+class PostUpdated extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public Task $task;
+    public Post $post;
 
     /**
      * Create a new message instance.
      *
-     * @param Task $task
+     * @return void
      */
-    public function __construct(Task $task)
+    public function __construct(Post $post)
     {
-        $this->task = $task;
+        $this->post = $post;
     }
 
     /**
@@ -30,6 +31,6 @@ class TaskCreated extends Mailable
      */
     public function build()
     {
-        return $this->markdown('mail.task-created');
+        return $this->markdown('mail.posts.updated-post');
     }
 }

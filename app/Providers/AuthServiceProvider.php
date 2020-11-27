@@ -2,10 +2,14 @@
 
 namespace App\Providers;
 
+use App\Models\Post\Post;
+use App\Policies\PostPolicy;
+use App\Policies\StepPolicy;
 use App\Policies\TaskPolicy;
-use App\Task;
+use App\Models\Task\Step;
+use App\Models\Task\Task;
+use Illuminate\Contracts\Auth\Access\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -16,15 +20,17 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Task::class => TaskPolicy::class,
+        Step::class => StepPolicy::class,
+        Post::class => PostPolicy::class,
     ];
 
     /**
      * Register any authentication / authorization services.
      *
-     * @param \Illuminate\Contracts\Auth\Access\Gate $gate
+     * @param Gate $gate
      * @return void
      */
-    public function boot(\Illuminate\Contracts\Auth\Access\Gate $gate)
+    public function boot(Gate $gate)
     {
         $this->registerPolicies();
 

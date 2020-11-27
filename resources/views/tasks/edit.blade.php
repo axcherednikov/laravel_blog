@@ -21,11 +21,13 @@
             </div>
             <div class="form-group">
                 <label for="inputBody">Описание задачи</label>
-                <textarea class="form-control" name="body" id="inputBody" rows="10">{{ old('body', $task->body) }}</textarea>
+                <textarea class="form-control" name="body" id="inputBody" rows="10">
+                    {{ old('body', $task->body) }}
+                </textarea>
             </div>
             <div class="form-group">
                 <label for="inputTags">Тэги</label>
-                <input type="text" class="form-control" id="inputTags" name="tags"
+                <input type="text" class="form-control" id="inputTasksTags" name="tags"
                        value="{{ old('tags', $task->tags->pluck('name')->implode(',')) }}">
             </div>
 

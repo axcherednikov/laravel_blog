@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Models\Task;
 
+use App\Models\User;
 use App\Events\TaskCreated;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Mail;
 
 class Task extends Model
 {

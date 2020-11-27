@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Tasks;
 
-use App\Tag;
+use App\Http\Controllers\Controller;
+use App\Models\Task\Tag;
 
 class TagsController extends Controller
 {

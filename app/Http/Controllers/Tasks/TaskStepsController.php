@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Tasks;
 
-use App\Step;
-use App\Task;
+use App\Http\Controllers\Controller;
+use App\Models\Task\Task;
 
 class TaskStepsController extends Controller
 {
