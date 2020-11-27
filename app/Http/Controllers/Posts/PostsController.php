@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Posts;
 
+use App\Events\Posts\PostCreated;
+use App\Events\Posts\PostDeleted;
+use App\Events\Posts\PostUpdated;
 use App\Http\Controllers\Controller;
 use App\Models\Post\Post;
 use App\Models\Post\Tag;
@@ -60,6 +63,8 @@ class PostsController extends Controller
             $post->tags()->attach($tag);
         }
 
+        event(new PostCreated($post));
+
         flash('Статья успешно создана');
 
         return redirect()->route('home');
@@ -98,7 +103,7 @@ class PostsController extends Controller
         /** @var Collection $postTags */
         $postTags = $post->tags->keyBy('name');
 
-        $tags = collect(explode(',', request('tags')))->keyBy(fn ($item) => $item);
+        $tags = collect(explode(',', request('tags')))->keyBy(fn($item) => $item);
 
         $syncIds = $postTags->intersectByKeys($tags)->pluck('id')->toArray();
 
@@ -111,6 +116,8 @@ class PostsController extends Controller
 
         $post->tags()->sync($syncIds);
 
+        event(new PostUpdated($post));
+
         flash('Статья успешно обновлена');
 
         return redirect()->route('posts.index');
@@ -118,6 +125,8 @@ class PostsController extends Controller
 
     public function destroy(Post $post)
     {
+        event(new PostDeleted($post));
+
         $post->delete();
 
         flash('Статья удалена', 'warning');
