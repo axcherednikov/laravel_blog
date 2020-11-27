@@ -15,18 +15,19 @@
         @include('posts.tags', ['tagsPost' => $post->tags])
 
         <br>
+        @can('update', $post)
+            <form action="{{ route('posts.destroy', ['post' => $post->slug], false) }}" method="post">
 
-        <form action="{{ route('posts.destroy', ['post' => $post->slug], false) }}" method="post">
+                @csrf
+                @method('DELETE')
 
-            @csrf
-            @method('DELETE')
+                <a class="btn btn-primary" href="{{ route('posts.edit', ['post' => $post->slug], false) }}" role="button">
+                    Редактировать
+                </a>
 
-            <a class="btn btn-primary" href="{{ route('posts.edit', ['post' => $post->slug], false) }}" role="button">
-                Редактировать
-            </a>
-
-            <input class="btn btn-danger" type="submit" value="Удалить">
-        </form>
+                <input class="btn btn-danger" type="submit" value="Удалить">
+            </form>
+        @endcan
         <hr>
         <a href="/">Вернуться на главную страницу</a>
     </div>

@@ -11,6 +11,13 @@ use Illuminate\Validation\Rule;
 
 class PostsController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index', 'show']);
+        $this->middleware('can:update,post')->except(['index', 'create', 'store', 'show']);
+    }
+
     public function index()
     {
         $posts = Post::latest()->get();
@@ -37,6 +44,8 @@ class PostsController extends Controller
             'body'        => 'required',
             'publish'     => 'nullable|boolean',
         ]);
+
+        $validatedData['owner_id'] = auth()->id();
 
         $validatedData['slug'] = request('slug')
             ? request('slug')
