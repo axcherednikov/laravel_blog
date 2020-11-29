@@ -3,13 +3,9 @@
 namespace App\Events;
 
 use App\Models\Task\Task;
-use Illuminate\Foundation\Events\Dispatchable;
-use Illuminate\Queue\SerializesModels;
 
-class TaskCreated
+class TaskCreated extends AbstractEvents
 {
-    use Dispatchable, SerializesModels;
-
     public $task;
 
     /**

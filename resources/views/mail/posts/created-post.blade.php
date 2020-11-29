@@ -1,12 +1,12 @@
 @component('mail::message')
-    # Создана новая задача: {{ $post->title }}
+# Создана новая задача: {{ $post->title }}
 
-    {{ $post->description }}
+{{ $post->description }}
 
-    @component('mail::button', ['url' => route('posts.show', ['post' => $post->slug])])
-        Посмотреть статью
-    @endcomponent
+@component('mail::button', ['url' => route('posts.show', ['post' => $post->slug])])
+    Посмотреть статью
+@endcomponent
 
-    Thanks,<br>
-    {{ config('app.name') }}
+Ждём Вас снова,<br>
+{{ config('app.name') }}
 @endcomponent

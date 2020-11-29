@@ -12,7 +12,7 @@ class SendPostCreatedNotification
     /**
      * Handle the event.
      *
-     * @param  PostCreated  $event
+     * @param PostCreated $event
      * @return void
      */
     public function handle(PostCreated $event)

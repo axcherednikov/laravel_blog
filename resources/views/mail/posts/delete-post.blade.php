@@ -1,12 +1,12 @@
 @component('mail::message')
-    # Статья {{ $post->title }} удалена
+# Статья {{ $post->title }} удалена
 
-    {{ $post->description }}
+{{ $post->description }}
 
-    @component('mail::button', ['url' => route('home')])
-        Перейти на сайт
-    @endcomponent
+@component('mail::button', ['url' => route('home')])
+    Перейти на сайт
+@endcomponent
 
-    Thanks,<br>
-    {{ config('app.name') }}
+Ждём Вас снова, <br>
+{{ config('app.name') }}
 @endcomponent

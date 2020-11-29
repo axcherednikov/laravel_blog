@@ -1,5 +1,5 @@
 @php
-    $tagsTask = $tagsTaskCloud ?? collect();
+    $tagsTask = $tagsTask ?? collect();
 @endphp
 
 @if($tagsTask->isNotEmpty())

@@ -3,14 +3,9 @@
 namespace App\Mail;
 
 use App\Models\Task\Task;
-use Illuminate\Bus\Queueable;
-use Illuminate\Mail\Mailable;
-use Illuminate\Queue\SerializesModels;
 
-class TaskCreated extends Mailable
+class TaskCreated extends AbstractEmails
 {
-    use Queueable, SerializesModels;
-
     public Task $task;
 
     /**
