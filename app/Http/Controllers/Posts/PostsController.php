@@ -6,11 +6,10 @@ use App\Events\Posts\PostCreated;
 use App\Events\Posts\PostDeleted;
 use App\Events\Posts\PostUpdated;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PostRequest;
 use App\Models\Post\Post;
 use App\Models\Post\Tag;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
-use Illuminate\Validation\Rule;
 
 class PostsController extends Controller
 {
@@ -38,21 +37,11 @@ class PostsController extends Controller
         return view('posts.create');
     }
 
-    public function store()
+    public function store(PostRequest $request)
     {
-        $validatedData = $this->validate(request(), [
-            'slug'        => 'nullable|regex:~^[a-zA-Z0-9_-]+$~|alpha_dash|unique:posts',
-            'title'       => 'required|between:5,100|unique:posts',
-            'description' => 'required|max:255',
-            'body'        => 'required',
-            'publish'     => 'nullable|boolean',
-        ]);
+        $validatedData = $request->validated();
 
         $validatedData['owner_id'] = auth()->id();
-
-        $validatedData['slug'] = request('slug')
-            ? request('slug')
-            : Str::of(request('title'))->slug('-', 'en');
 
         $post = Post::create($validatedData);
 
@@ -75,28 +64,9 @@ class PostsController extends Controller
         return view('posts.edit', compact('post'));
     }
 
-    public function update(Post $post)
+    public function update(PostRequest $request, Post $post)
     {
-        $validatedData = $this->validate(request(), [
-            'slug'        => [
-                'nullable',
-                'regex:~^[a-zA-Z0-9_-]+$~',
-                'alpha_dash',
-                Rule::unique('posts')->ignore($post->id),
-            ],
-            'title'       => [
-                'required',
-                'between:5,100',
-                Rule::unique('posts')->ignore($post->id),
-            ],
-            'description' => 'required|max:255',
-            'body'        => 'required',
-            'publish'     => 'nullable|boolean',
-        ]);
-
-        $validatedData['slug'] = request('slug')
-            ? request('slug')
-            : Str::of(request('title'))->slug('-', 'en');
+        $validatedData = $request->validated();
 
         $post->update($validatedData);
 
