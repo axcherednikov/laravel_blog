@@ -4,31 +4,34 @@
     <meta charset="utf-8">
     <title>@yield('title', config('app.name'))</title>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
-    <link href="/css/blog.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
 </head>
 
 <body>
-@include('layout.nav')
 
-    <div class="container">
-        @include('layout.flash_message')
-    </div>
+    @include('layout.nav')
 
-    <main role="main" class="container py-4">
-        <div class="row">
+        <div class="container">
+            @include('layout.flash_message')
+        </div>
 
-            @yield('content')
+        <main role="main" class="container py-4" id="app">
+            <div class="row">
 
-            @section('sidebar')
-                @include('layout.sidebar')
-            @show
+                @yield('content')
 
-        </div><!-- /.row -->
-    </main><!-- /.container -->
+                @section('sidebar')
+                    @include('layout.sidebar')
+                @show
 
-@include('layout.footer')
+            </div><!-- /.row -->
+        </main><!-- /.container -->
+
+    @include('layout.footer')
+
+<script src="{{ mix('/js/manifest.js') }}"></script>
+<script src="{{ mix('/js/vendor.js') }}"></script>
+<script src="{{ mix('/js/app.js') }}"></script>
+
 </body>
 </html>
