@@ -8,8 +8,7 @@ use App\Events\Posts\PostUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
 use App\Models\Post\Post;
-use App\Models\Post\Tag;
-use Illuminate\Support\Collection;
+use App\Services\PostsService;
 
 class PostsController extends Controller
 {
@@ -45,12 +44,7 @@ class PostsController extends Controller
 
         $post = Post::create($validatedData);
 
-        $tags = collect(explode(',', request('tags')));
-
-        foreach ($tags as $tag) {
-            $tag = Tag::firstOrCreate(['name' => $tag]);
-            $post->tags()->attach($tag);
-        }
+        PostsService::setTags($post);
 
         event(new PostCreated($post));
 
@@ -66,25 +60,9 @@ class PostsController extends Controller
 
     public function update(PostRequest $request, Post $post)
     {
-        $validatedData = $request->validated();
+        $post->update($request->validated());
 
-        $post->update($validatedData);
-
-        /** @var Collection $postTags */
-        $postTags = $post->tags->keyBy('name');
-
-        $tags = collect(explode(',', request('tags')))->keyBy(fn($item) => $item);
-
-        $syncIds = $postTags->intersectByKeys($tags)->pluck('id')->toArray();
-
-        $tagsToAttach = $tags->diffKeys($postTags);
-
-        foreach ($tagsToAttach as $tag) {
-            $tag = Tag::firstOrCreate(['name' => $tag]);
-            $syncIds[] = $tag->id;
-        }
-
-        $post->tags()->sync($syncIds);
+        PostsService::setTags($post);
 
         event(new PostUpdated($post));
 

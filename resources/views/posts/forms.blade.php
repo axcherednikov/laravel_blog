@@ -47,9 +47,7 @@
 <div class="form-group">
     <label for="bodyInput">Текст статьи</label>
 
-    <textarea class="form-control" id="bodyInput" name="body" rows="10">
-                    {{ old('body', $post->body ?? '') }}
-                </textarea>
+    <textarea class="form-control" id="bodyInput" name="body" rows="10">{{ old('body', $post->body ?? '') }}</textarea>
 </div>
 
 <div class="form-group">

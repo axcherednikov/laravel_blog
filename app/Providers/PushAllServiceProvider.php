@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Service\Pushall;
+use App\Services\Pushall;
 use Illuminate\Support\ServiceProvider;
 
 class PushAllServiceProvider extends ServiceProvider
