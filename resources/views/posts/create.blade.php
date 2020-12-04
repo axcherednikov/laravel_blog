@@ -15,7 +15,7 @@
 
             @csrf
 
-            @include('posts.forms')
+            @include('posts.forms', ['post' => new \App\Models\Post\Post()])
 
             <button type="submit" class="btn btn-primary">Создать статью</button>
         </form>

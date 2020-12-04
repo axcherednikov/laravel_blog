@@ -9,20 +9,23 @@ class PostsService
 {
     /**
      * @param Post $post
+     * @param $requestTags
      */
-    public static function setTags(Post $post)
+    public function setTags(Post $post, $requestTags)
     {
         $postTags = $post->tags->keyBy('name');
 
-        $tags = collect(explode(',', request('tags')))->keyBy(fn ($item) => $item);
+        $tags = collect(explode(',', $requestTags['tags']))->keyBy(fn($item) => $item);
 
         $syncIds = $postTags->intersectByKeys($tags)->pluck('id')->toArray();
 
         $tagsToAttach = $tags->diffKeys($postTags);
 
         foreach ($tagsToAttach as $tag) {
-            $tag = Tag::firstOrCreate(['name' => $tag]);
-            $syncIds[] = $tag->id;
+            if (! empty($tag)) {
+                $tag = Tag::firstOrCreate(['name' => $tag]);
+                $syncIds[] = $tag->id;
+            }
         }
 
         $post->tags()->sync($syncIds);

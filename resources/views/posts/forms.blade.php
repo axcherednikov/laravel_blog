@@ -6,7 +6,7 @@
            id="inputSlug"
            name="slug"
            placeholder="Введите URL статьи"
-           value="{{ old('slug', $post->slug ?? '') }}"
+           value="{{ old('slug', $post->slug) }}"
     >
 
     <small id="slugHelp" class="form-text text-muted">
@@ -25,7 +25,7 @@
            id="inputTitle"
            name="title"
            placeholder="Введите название статьи"
-           value="{{ old('title', $post->title ?? '') }}"
+           value="{{ old('title', $post->title) }}"
     >
 </div>
 
@@ -39,15 +39,14 @@
            id="inputDescriptionCreate"
            name="description"
            placeholder="Введите краткое описание"
-           value="{{ old('description', $post->description ?? '') }}"
+           value="{{ old('description', $post->description) }}"
     >
-
 </div>
 
 <div class="form-group">
     <label for="bodyInput">Текст статьи</label>
 
-    <textarea class="form-control" id="bodyInput" name="body" rows="10">{{ old('body', $post->body ?? '') }}</textarea>
+    <textarea class="form-control" id="bodyInput" name="body" rows="10">{{ old('body', $post->body) }}</textarea>
 </div>
 
 <div class="form-group">
@@ -57,7 +56,7 @@
            id="tagsInput"
            name="tags"
            placeholder="Тэги статьи"
-           value="{{ old('tags', isset($post) ? $post->tags->pluck('name')->implode(',') : '') }}"
+           value="{{ old('tags', $post->tags->pluck('name')->implode(',')) }}"
     >
 </div>
 
@@ -65,7 +64,7 @@
     <input class="form-check-input"
            type="checkbox"
            value="1"
-           {{ isset($post->publish) && $post->publish ? 'checked' : '' }}
+           {{ $post->publish ? 'checked' : '' }}
            id="inputPublish"
            name="publish"
     >

@@ -7,6 +7,7 @@ use App\Events\Posts\PostDeleted;
 use App\Events\Posts\PostUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
+use App\Http\Requests\TagRequest;
 use App\Models\Post\Post;
 use App\Services\PostsService;
 
@@ -36,15 +37,15 @@ class PostsController extends Controller
         return view('posts.create');
     }
 
-    public function store(PostRequest $request)
+    public function store(PostRequest $postRequest, TagRequest $tagRequest, PostsService $postsService)
     {
-        $validatedData = $request->validated();
+        $validatedData = $postRequest->validated();
 
         $validatedData['owner_id'] = auth()->id();
 
         $post = Post::create($validatedData);
 
-        PostsService::setTags($post);
+        $postsService->setTags($post, $tagRequest->validated());
 
         event(new PostCreated($post));
 
@@ -58,11 +59,11 @@ class PostsController extends Controller
         return view('posts.edit', compact('post'));
     }
 
-    public function update(PostRequest $request, Post $post)
+    public function update(PostRequest $postRequest, TagRequest $tagRequest, Post $post, PostsService $postsService)
     {
-        $post->update($request->validated());
+        $post->update($postRequest->validated());
 
-        PostsService::setTags($post);
+        $postsService->setTags($post, $tagRequest->validated());
 
         event(new PostUpdated($post));
 
