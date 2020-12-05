@@ -2,15 +2,10 @@
 
 namespace App\Mail;
 
-use App\Task;
-use Illuminate\Bus\Queueable;
-use Illuminate\Mail\Mailable;
-use Illuminate\Queue\SerializesModels;
+use App\Models\Task\Task;
 
-class TaskCreated extends Mailable
+class TaskCreated extends AbstractEmails
 {
-    use Queueable, SerializesModels;
-
     public Task $task;
 
     /**

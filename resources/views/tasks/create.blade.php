@@ -15,9 +15,15 @@
 
             <div class="form-group">
                 <label for="inputTitle">Название задачи</label>
-                <input type="text" class="form-control" id="inputTitle" name="title"
-                       placeholder="Введите название задачи" value="{{ old('title') }}">
+                <input type="text"
+                       class="form-control"
+                       id="inputTitle"
+                       name="title"
+                       placeholder="Введите название задачи"
+                       value="{{ old('title') }}"
+                >
             </div>
+
             <div class="form-group">
                 <label for="inputBody">Описание задачи</label>
                 <textarea class="form-control" name="body" id="inputBody" >{{ old('body') }}</textarea>

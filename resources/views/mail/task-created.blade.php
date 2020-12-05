@@ -4,7 +4,7 @@
 {{ $task->body }}
 
 @component('mail::button', ['url' => route('tasks.show', ['task' => $task->id])])
-Посмотреть задачу
+    Посмотреть задачу
 @endcomponent
 
 Thanks,<br>

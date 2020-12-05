@@ -1,11 +1,8 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>
-        @yield('title', config('app.name'))
-    </title>
+    <title>@yield('title', config('app.name'))</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -14,26 +11,24 @@
 </head>
 
 <body>
-
 @include('layout.nav')
 
-<div class="container">
-    @include('layout.flash_message')
-</div>
+    <div class="container">
+        @include('layout.flash_message')
+    </div>
 
-<main role="main" class="container py-4">
-    <div class="row">
+    <main role="main" class="container py-4">
+        <div class="row">
 
-        @yield('content')
+            @yield('content')
 
-        @section('sidebar')
-            @include('layout.sidebar')
-        @show
+            @section('sidebar')
+                @include('layout.sidebar')
+            @show
 
-    </div><!-- /.row -->
-</main><!-- /.container -->
+        </div><!-- /.row -->
+    </main><!-- /.container -->
 
 @include('layout.footer')
-
 </body>
 </html>

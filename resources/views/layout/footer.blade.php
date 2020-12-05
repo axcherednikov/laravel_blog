@@ -1,7 +1,8 @@
 <footer class="blog-footer">
-    <p>Шаблон блога <a href="https://getbootstrap.com/">Bootstrap</a> от <a
-            href="https://twitter.com/mdo">Twitter@mdo</a>.
+    <p>
+        Блог Laravel от SkillBox <a href="/">Laravel Blog</a>
     </p>
+
     <p>
         <a href="#">Back to top</a>
     </p>

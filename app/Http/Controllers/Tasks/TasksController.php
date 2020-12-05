@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Tasks;
 
-use App\Tag;
-use App\Task;
+use App\Http\Controllers\Controller;
+use App\Models\Task\Tag;
+use App\Models\Task\Task;
 use Illuminate\Database\Eloquent\Collection;
 
 class TasksController extends Controller
