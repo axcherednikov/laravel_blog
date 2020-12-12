@@ -14,7 +14,7 @@ class TasksToUserSeeder extends Seeder
      */
     public function run()
     {
-        $user = factory(User::class)->create(['email' => 'admin@admin.ru', 'password' => Hash::make('1234')]);
+        $user = factory(User::class)->create(['email' => 'admin2@admin.ru', 'password' => Hash::make('1234')]);
 
         factory(Task::class, 5)->create([
             'owner_id' => $user
