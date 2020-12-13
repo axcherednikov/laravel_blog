@@ -35,3 +35,10 @@ Route::delete('/completed-steps/{step}', 'Tasks\CompletedStepsController@destroy
 
 // Route Auth
 Auth::routes();
+
+Route::post('/companies', function () {
+    auth()->user()->company()->create(request()->validate(['name' => 'required']));
+})->middleware('auth');
+
+Route::get('/service', 'PushServiceController@form')->name('service.form');
+Route::post('/service', 'PushServiceController@send')->name('service.send');

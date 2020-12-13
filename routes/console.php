@@ -17,3 +17,10 @@ use Illuminate\Support\Facades\Artisan;
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->describe('Display an inspiring quote');
+
+
+Artisan::command('tc', function () {
+    /** @var $this \Illuminate\Console\Command */
+
+    $this->call('telescope:clear');
+})->describe('Clear Telescope');
