@@ -1,9 +1,11 @@
 <?php
 
-use App\Models\User;
+namespace Database\Seeders;
+
+use App\Models\Task\Task;
 use Illuminate\Database\Seeder;
 
-class UsersTableSeeder extends Seeder
+class TasksSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,6 +14,6 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(User::class, 3)->create();
+        factory(Task::class, 5)->create();
     }
 }

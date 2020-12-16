@@ -1,8 +1,11 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Models\Task\Step;
 use App\Models\Task\Task;
 use App\Models\User;
+use Hash;
 use Illuminate\Database\Seeder;
 
 class TasksToUserSeeder extends Seeder

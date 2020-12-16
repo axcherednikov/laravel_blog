@@ -1,6 +1,8 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
+
+/** @var \Illuminate\Database\Eloquent\Factories\Factory $factory */
 
 use App\Models\Task\Task;
 use App\Models\User;

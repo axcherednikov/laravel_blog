@@ -6,18 +6,18 @@ use GuzzleHttp\Client as GuzzleClient;
 
 class PushAll
 {
-    private $id;
-    private $apiKey;
+    private string $id;
+    private string $apiKey;
 
     protected string $url = 'https://pushall.ru/api.php';
 
-    public function __construct($apiKey, $id)
+    public function __construct(string $apiKey, string $id)
     {
         $this->id = $id;
         $this->apiKey = $apiKey;
     }
 
-    public function send($title, $text)
+    public function send(string $title, string $text)
     {
         $data = [
             'type'  => 'self',

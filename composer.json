@@ -8,25 +8,25 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.4.13",
-        "ext-curl": "*",
-        "doctrine/dbal": "2.12.1",
-        "fideloper/proxy": "^4.4.1",
-        "fruitcake/laravel-cors": "^1.0.6",
-        "guzzlehttp/guzzle": "^7.2",
-        "laravel/framework": "^7.30.0",
-        "laravel/telescope": "^3.x-dev",
-        "laravel/tinker": "^2.5",
-        "laravel/ui": "^2.5"
+        "php": "^7.4",
+        "doctrine/dbal": "^2",
+        "fideloper/proxy": "^4",
+        "fruitcake/laravel-cors": "^1",
+        "guzzlehttp/guzzle": "^7",
+        "laravel/framework": "^8",
+        "laravel/legacy-factories": "^1.1",
+        "laravel/telescope": "^v4",
+        "laravel/tinker": "^2",
+        "laravel/ui": "^3"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.5",
-        "barryvdh/laravel-ide-helper": "^2.8.1",
-        "facade/ignition": "^2.5.2",
-        "fzaninotto/faker": "^1.9.1",
-        "mockery/mockery": "^1.4.2",
-        "nunomaduro/collision": "^4.3.0",
-        "phpunit/phpunit": "^8.5.13"
+        "barryvdh/laravel-debugbar": "^3",
+        "barryvdh/laravel-ide-helper": "^2",
+        "facade/ignition": "^2",
+        "fzaninotto/faker": "^1.9",
+        "mockery/mockery": "^1.4",
+        "nunomaduro/collision": "^v5.1",
+        "phpunit/phpunit": "^9.5"
     },
     "config": {
         "optimize-autoloader": true,
@@ -40,12 +40,10 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
         },
-        "classmap": [
-            "database/seeds",
-            "database/factories"
-        ],
         "files": [
             "app/Helpers/helpers.php"
         ]
