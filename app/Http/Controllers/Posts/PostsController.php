@@ -59,15 +59,11 @@ class PostsController extends Controller
         return view('posts.edit', compact('post'));
     }
 
-    public function update(PostRequest $postRequest, TagRequest $tagRequest, Post $post, PostsService $postsService)
+    public function update(Post $post, PostsService $postsService, PostRequest $postRequest, TagRequest $tagRequest)
     {
-        $post->update($postRequest->validated());
-
-        $postsService->setTags($post, $tagRequest->validated());
+        $postsService->postUpdate($post, $tagRequest, $postRequest);
 
         event(new PostUpdated($post));
-
-        flash('Статья успешно обновлена');
 
         return redirect()->route('posts.index');
     }

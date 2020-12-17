@@ -10,8 +10,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $slug
  * @property string $name
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|Role newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Role newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Role query()
@@ -24,5 +22,12 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Role extends Model
 {
-    protected $fillable = ['name'];
+    protected $fillable = ['slug, name'];
+
+    public $timestamps = false;
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }

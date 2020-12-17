@@ -8,27 +8,27 @@
 </head>
 
 <body>
-
+<div class="container-fluid">
     @include('layout.nav')
 
-        <div class="container">
-            @include('layout.flash_message')
-        </div>
+    <div class="container">
+        @include('layout.flash_message')
+    </div>
 
-        <main role="main" class="container py-4" id="app">
-            <div class="row">
+    <main role="main" class="container py-4" id="app">
+        <div class="row">
 
-                @yield('content')
+            @yield('content')
 
-                @section('sidebar')
-                    @include('layout.sidebar')
-                @show
+            @section('sidebar')
+                @include('layout.sidebar')
+            @show
 
-            </div><!-- /.row -->
-        </main><!-- /.container -->
+        </div><!-- /.row -->
+    </main><!-- /.container -->
 
     @include('layout.footer')
-
+</div>
 <script src="{{ mix('/js/manifest.js') }}"></script>
 <script src="{{ mix('/js/vendor.js') }}"></script>
 <script src="{{ mix('/js/app.js') }}"></script>
