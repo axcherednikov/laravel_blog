@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Task\Task;
+use App\Models\Post\Post;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
-class TasksSeeder extends Seeder
+class PostsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +15,6 @@ class TasksSeeder extends Seeder
      */
     public function run()
     {
-        Task::factory()->count(5)->create();
+        Post::factory()->count(5)->create();
     }
 }

@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Task\Task;
+use App\Models\Post\Tag;
 use Illuminate\Database\Seeder;
 
-class TasksSeeder extends Seeder
+class TagsToPostsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class TasksSeeder extends Seeder
      */
     public function run()
     {
-        Task::factory()->count(5)->create();
+        Tag::factory()->count(40)->create();
     }
 }
