@@ -47,6 +47,19 @@ class Task extends Model
         'created' => TaskCreated::class,
     ];
 
+    protected $attributes = [
+        'type' => 'new',
+    ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        self::addGlobalScope('onlyNew', function (\Illuminate\Database\Eloquent\Builder $builder) {
+            $builder->new();
+        });
+    }
+
     public function getRouteKeyName()
     {
         return 'id';
@@ -55,6 +68,16 @@ class Task extends Model
     public function scopeIncomplete($query)
     {
         return $query->where('completed', 0)->get();
+    }
+
+    public function scopeOfType($query, string $type)
+    {
+        return $query->where('type', $type);
+    }
+
+    public function scopeNew($query)
+    {
+        return $query->ofType('new');
     }
 
     public function steps()
