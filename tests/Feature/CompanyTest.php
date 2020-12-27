@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -15,7 +16,7 @@ class CompanyTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $this->actingAs($user = factory(\App\Models\User::class)->create());
+        $this->actingAs($user = User::factory()->create());
 
         $this->post('/companies', $attributes = ['name' => 'Skillbox']);
 
@@ -24,7 +25,7 @@ class CompanyTest extends TestCase
 
     public function testItRequiresNameOnCreate()
     {
-        $this->actingAs($user = factory(\App\Models\User::class)->create());
+        $this->actingAs($user = User::factory()->create());
 
         $this->post('/companies', [])->assertSessionHasErrors(['name']);
     }

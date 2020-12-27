@@ -18,9 +18,9 @@ if (! function_exists('push_all')) {
     /**
      * @param string|null $title
      * @param string|null $text
-     * @return \App\Services\PushAll|mixed
+     * @return mixed
      */
-    function push_all(string $title = null, string $text = null)
+    function push_all(string $title = null, string $text = null): mixed
     {
         if (is_null($title) || is_null($text)) {
             return app(\App\Services\PushAll::class);

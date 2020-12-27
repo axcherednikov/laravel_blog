@@ -7,4 +7,7 @@
     @include('posts.tags', ['tagsPost' => $post->tags])
 
     <p class="blog-post-meta">{{ $post->created_at->toFormattedDateString() }}</p>
+    @admin
+        <a href="{{ route('admin.posts.edit', ['post' => $post->slug], false) }}" class="btn btn-info">Редактировать</a>
+    @endadmin
 </div>

@@ -14,9 +14,9 @@ class UsersTest extends TestCase
 
     public function testAUserCanHaveTasks()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
-        $attributes = factory(Task::class)->raw(['owner_id' => $user]);
+        $attributes = Task::factory()->raw(['owner_id' => $user]);
 
         $user->tasks()->create($attributes);
 
@@ -26,7 +26,7 @@ class UsersTest extends TestCase
     public function testAUserCanHaveCompany()
     {
         /** @var User $user */
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         $user->company()->create(['name' => 'BP']);
         $this->assertEquals('BP', $user->company->name);

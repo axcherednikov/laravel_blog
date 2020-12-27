@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Post\Post;
 use App\Models\Task\Task;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -33,10 +35,14 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \App\Models\Company|null $company
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Role[] $roles
+ * @property-read int|null $roles_count
  */
 class User extends Authenticatable
 {
     use Notifiable;
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -70,8 +76,23 @@ class User extends Authenticatable
         return $this->hasMany(Task::class, 'owner_id');
     }
 
+    public function posts()
+    {
+        return $this->hasMany(Post::class, 'owner_id');
+    }
+
     public function company()
     {
         return $this->hasOne(Company::class, 'owner_id');
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->roles()->where('slug', '=', 'admin')->exists();
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Http\Requests\PostRequest;
+use App\Http\Requests\TagRequest;
 use App\Models\Post\Post;
 use App\Models\Post\Tag;
 
@@ -29,5 +31,19 @@ class PostsService
         }
 
         $post->tags()->sync($syncIds);
+    }
+
+    /**
+     * @param Post $post
+     * @param TagRequest $tagRequest
+     * @param PostRequest $postRequest
+     */
+    public function postUpdate(Post $post, TagRequest $tagRequest, PostRequest $postRequest)
+    {
+        $post->update($postRequest->validated());
+
+        $this->setTags($post, $tagRequest->validated());
+
+        flash('Статья успешно обновлена');
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,6 +14,9 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            TagsToPostsSeeder::class,
+            PostsToUsersSeeder::class,
+            PostsSeeder::class,
             UsersTableSeeder::class,
             TasksToUserSeeder::class,
         ]);

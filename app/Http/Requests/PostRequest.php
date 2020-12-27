@@ -25,6 +25,12 @@ class PostRequest extends FormRequest
                 'slug' => Str::slug($this->input('title'))
             ]);
         }
+
+        if ($this->input('publish') == null) {
+            $this->merge([
+               'publish' => false,
+            ]);
+        }
     }
 
     /**
