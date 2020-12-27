@@ -16,9 +16,9 @@ class TasksTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $this->actingAs($user = factory(\App\Models\User::class)->create());
+        $this->actingAs($user = \App\Models\User::factory()->create());
 
-        $attributes = factory(Task::class)->raw(['owner_id' => $user]);
+        $attributes = Task::factory()->raw(['owner_id' => $user]);
 
         $this->post('/tasks', $attributes);
 

@@ -21,6 +21,7 @@
         </form>
 
         <form method="post" action="{{ route('admin.posts.delete', ['post' => $post->slug], false) }}">
+            @csrf
             @method('DELETE')
 
             <button type="submit" class="btn btn-danger">Удалить</button>

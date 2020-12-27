@@ -3,22 +3,27 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Collection;
 
-class TaskStepCompleted extends Notification
+class NewPosts extends Notification
 {
     use Queueable;
 
     /**
      * Create a new notification instance.
      *
-     * @return void
+     * @param  Collection  $posts
+     * @param  string  $countPeriod
+     * @param  string  $subject
      */
-    public function __construct()
-    {
-        //
+    public function __construct(
+        public Collection $posts,
+        public string $countPeriod,
+        public string $subject = 'Уведомление о новых статьях'
+    ) {
+
     }
 
     /**
@@ -27,9 +32,9 @@ class TaskStepCompleted extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function via(mixed $notifiable): array
+    public function via($notifiable)
     {
-        return ['mail', 'database'];
+        return ['mail'];
     }
 
     /**
@@ -38,12 +43,14 @@ class TaskStepCompleted extends Notification
      * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail(mixed $notifiable): MailMessage
+    public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Шаг выполнен')
-            ->line('The introduction to the notification.')
-            ->action('Перейти на сайт', url('/'));
+            ->subject($this->subject)
+            ->markdown('mail.posts.new-posts', [
+                'posts' => $this->posts,
+                'countPeriod' => $this->countPeriod
+            ]);
     }
 
     /**
@@ -52,7 +59,7 @@ class TaskStepCompleted extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray(mixed $notifiable): array
+    public function toArray($notifiable)
     {
         return [
             //
