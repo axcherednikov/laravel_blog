@@ -16,6 +16,7 @@ class PushAll
             'type'  => 'self',
             'id'    => $this->id,
             'key'   => $this->apiKey,
+            'url'   => route('home'),
             'text'  => $text,
             'title' => $title,
         ];
