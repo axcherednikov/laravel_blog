@@ -20,7 +20,7 @@
             <button type="submit" class="btn btn-primary">Обновить статью</button>
         </form>
 
-        <form method="post" action="{{ route('admin.posts.delete', ['post' => $post->slug], false) }}">
+        <form method="post" action="{{ route('admin.posts.destroy', ['post' => $post->slug], false) }}">
             @csrf
             @method('DELETE')
 

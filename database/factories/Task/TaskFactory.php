@@ -25,7 +25,7 @@ class TaskFactory extends Factory
         return [
             'title' => $this->faker->words(3, true),
             'body' => $this->faker->sentence,
-            'owner_id' => User::pluck('id')->random(),
+            'owner_id' => User::factory(),
         ];
     }
 }
