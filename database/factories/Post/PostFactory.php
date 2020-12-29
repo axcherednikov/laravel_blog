@@ -23,7 +23,7 @@ class PostFactory extends Factory
     public function definition()
     {
         return [
-            'owner_id' => User::pluck('id')->random(),
+            'owner_id' => User::factory(),
             'slug' => $this->faker->slug('3'),
             'title' => $this->faker->sentence,
             'description' => $this->faker->sentence('7'),
