@@ -20,5 +20,7 @@ class SendPostCreatedNotification
         Mail::to(config('mail.admin.address'))->send(
             new \App\Mail\Posts\PostCreated($event->post)
         );
+
+        push_all($event->post->title, $event->post->description);
     }
 }

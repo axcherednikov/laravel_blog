@@ -18,6 +18,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(PostsService::class, function () {
             return new PostsService();
         });
+
+        \Blade::if('admin', function () {
+            return auth()->check() && auth()->user()->isAdmin();
+        });
     }
 
     /**
