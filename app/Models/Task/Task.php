@@ -75,6 +75,11 @@ class Task extends Model
         return str_repeat($this->type, 2);
     }
 
+    public function setTypeAttribute(string $value)
+    {
+        $this->attributes['type'] = ucfirst(mb_strtolower($value));
+    }
+
     public function getRouteKeyName()
     {
         return 'id';
