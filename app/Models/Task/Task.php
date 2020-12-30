@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $owner_id
  * @property string $title
  * @property string $body
+ * @property string $type
  * @property int $completed
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -51,6 +52,10 @@ class Task extends Model
         'type' => 'new',
     ];
 
+    protected $appends = [
+        'double_type',
+    ];
+
     protected static function boot()
     {
         parent::boot();
@@ -58,6 +63,16 @@ class Task extends Model
         self::addGlobalScope('onlyNew', function (\Illuminate\Database\Eloquent\Builder $builder) {
             $builder->new();
         });
+    }
+
+    public function getTypeAttribute(string $value): string
+    {
+        return ucfirst($value);
+    }
+
+    public function getDoubleTypeAttribute()
+    {
+        return str_repeat($this->type, 2);
     }
 
     public function getRouteKeyName()
