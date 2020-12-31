@@ -56,13 +56,23 @@ class Task extends Model
         'double_type',
     ];
 
+    protected $dates = [
+        'viewed_at',
+    ];
+
+    protected $casts = [
+        'completed' => 'boolean',
+        'options'   => 'array',
+        'viewed_at' => 'datetime:Y-m-d',
+    ];
+
     protected static function boot()
     {
         parent::boot();
 
-        self::addGlobalScope('onlyNew', function (\Illuminate\Database\Eloquent\Builder $builder) {
-            $builder->new();
-        });
+//        self::addGlobalScope('onlyNew', function (\Illuminate\Database\Eloquent\Builder $builder) {
+//            $builder->new();
+//        });
     }
 
     public function getTypeAttribute(string $value): string
