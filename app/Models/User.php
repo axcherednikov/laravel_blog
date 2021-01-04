@@ -38,6 +38,8 @@ use Illuminate\Notifications\Notifiable;
  * @property-read \App\Models\Company|null $company
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Role[] $roles
  * @property-read int|null $roles_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|Post[] $posts
+ * @property-read int|null $posts_count
  */
 class User extends Authenticatable
 {

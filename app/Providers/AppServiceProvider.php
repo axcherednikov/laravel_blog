@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Post\Tag;
 use App\Services\PostsService;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -15,13 +16,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(PostsService::class, function () {
-            return new PostsService();
-        });
+        $this->app->bind(PostsService::class, fn() => new PostsService());
 
-        \Blade::if('admin', function () {
-            return auth()->check() && auth()->user()->isAdmin();
-        });
+        \Blade::if('admin', fn() => auth()->check() && auth()->user()->isAdmin());
+
+        Paginator::defaultSimpleView('pagination::simple-default');
     }
 
     /**

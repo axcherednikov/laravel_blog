@@ -7,6 +7,8 @@ use App\Events\TaskCreated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Arr;
+
 
 /**
  * App\Models\Task\Task
@@ -15,26 +17,41 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $owner_id
  * @property string $title
  * @property string $body
- * @property string $type
- * @property int $completed
+ * @property bool $completed
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property string $type
+ * @property \datetime $viewed_at
+ * @property array|null $options
+ * @property-read mixed $double_type
+ * @property-read \Illuminate\Database\Eloquent\Collection|User[] $history
+ * @property-read int|null $history_count
  * @property-read User $owner
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Task\Step[] $steps
  * @property-read int|null $steps_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Task\Tag[] $tags
  * @property-read int|null $tags_count
  * @method static \Illuminate\Database\Eloquent\Builder|Task incomplete()
+ * @method static \Illuminate\Database\Eloquent\Builder|Task new()
  * @method static \Illuminate\Database\Eloquent\Builder|Task newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Task newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Task ofType(string $type)
+ * @method static \Illuminate\Database\Query\Builder|Task onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Task query()
  * @method static \Illuminate\Database\Eloquent\Builder|Task whereBody($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Task whereCompleted($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Task whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Task whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Task whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Task whereOptions($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Task whereOwnerId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Task whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Task whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Task whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Task whereViewedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|Task withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Task withoutTrashed()
  * @mixin \Eloquent
  */
 class Task extends Model
@@ -69,6 +86,14 @@ class Task extends Model
     protected static function boot()
     {
         parent::boot();
+
+        static::updating(function (Task $task) {
+            $after = $task->getDirty();
+            $task->history()->attach(auth()->id(), [
+                'before' => json_encode(Arr::only($task->fresh()->toArray(), array_keys($after))),
+                'after' => json_encode($after),
+            ]);
+        });
 
 //        self::addGlobalScope('onlyNew', function (\Illuminate\Database\Eloquent\Builder $builder) {
 //            $builder->new();
@@ -128,5 +153,13 @@ class Task extends Model
     public function owner()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function history()
+    {
+        return $this
+            ->belongsToMany(User::class, 'task_histories')
+            ->withPivot(['before', 'after'])
+            ->withTimestamps();
     }
 }
