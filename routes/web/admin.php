@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Admin\FeedbackController;
-use App\Http\Controllers\Admin\Posts\PostsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {

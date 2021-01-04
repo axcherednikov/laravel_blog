@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\Posts\PostsController;
 use App\Http\Controllers\PushServiceController;
@@ -9,12 +10,8 @@ use App\Http\Controllers\Tasks\TaskStepsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/about', function () {
-
-    $title = 'О нас';
-
-    return view('about', compact('title'));
-})->name('about');
+// Route About
+Route::get('/about', [AboutController::class, 'index'])->name('about');
 
 // Route Home
 Route::get('/', [PostsController::class, 'index'])->name('home');
