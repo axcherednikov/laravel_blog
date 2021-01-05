@@ -1,10 +1,10 @@
 @php
-    $tagsTask = $tagsTask ?? collect();
+    $tags = $tags ?? collect();
 @endphp
 
-@if($tagsTask->isNotEmpty())
+@if($tags->isNotEmpty())
     <div>
-        @foreach($tagsTask as $tag)
+        @foreach($tags as $tag)
             <a href="{{ route('tasks.tags.index', ['tag' => $tag->getRouteKeyName()], false) }}"
                class="badge badge-secondary">{{ $tag->name }}</a>
         @endforeach

@@ -92,7 +92,7 @@ class Task extends Model
             $after = $task->getDirty();
             $task->history()->attach(auth()->id(), [
                 'before' => json_encode(Arr::only($task->fresh()->toArray(), array_keys($after))),
-                'after' => json_encode($after),
+                'after'  => json_encode($after),
             ]);
         });
 
@@ -143,7 +143,7 @@ class Task extends Model
 
     public function tags()
     {
-        return $this->belongsToMany(Tag::class);
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 
     public function addStep(array $attributes)
@@ -167,5 +167,10 @@ class Task extends Model
     public function company()
     {
         return $this->hasOneThrough(Company::class, User::class, 'id', 'owner_id');
+    }
+
+    public function comments()
+    {
+        return $this->morphToMany('App\Models\Comment', 'commentable');
     }
 }

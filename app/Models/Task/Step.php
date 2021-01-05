@@ -46,4 +46,9 @@ class Step extends Model
     {
         $this->complete(false);
     }
+
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
+    }
 }
