@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Post\Post;
+use App\Models\Task\Step;
 use App\Models\Task\Task;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -38,6 +39,8 @@ use Illuminate\Notifications\Notifiable;
  * @property-read \App\Models\Company|null $company
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Role[] $roles
  * @property-read int|null $roles_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|Post[] $posts
+ * @property-read int|null $posts_count
  */
 class User extends Authenticatable
 {
@@ -94,5 +97,15 @@ class User extends Authenticatable
     public function isAdmin(): bool
     {
         return $this->roles()->where('slug', '=', 'admin')->exists();
+    }
+
+    public function steps()
+    {
+        return $this->hasManyThrough(Step::class, Task::class, 'owner_id');
+    }
+
+    public function avatar()
+    {
+        return $this->morphOne(Image::class, 'imageable');
     }
 }

@@ -1,19 +1,19 @@
 <?php
 
-namespace Database\Factories\Task;
+namespace Database\Factories;
 
-use App\Models\Task\Task;
+use App\Models\Company;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class TaskFactory extends Factory
+class CompanyFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Task::class;
+    protected $model = Company::class;
 
     /**
      * Define the model's default state.
@@ -23,10 +23,8 @@ class TaskFactory extends Factory
     public function definition()
     {
         return [
-            'title'    => $this->faker->words(3, true),
-            'body'     => $this->faker->sentence,
+            'name' => $this->faker->company,
             'owner_id' => User::factory(),
-            'type'     => $this->faker->randomElement(['new', 'old', 'fast']),
         ];
     }
 }

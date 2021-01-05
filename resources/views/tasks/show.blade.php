@@ -40,16 +40,17 @@
 
                                 <label class="form-check-label {{ $step->completed ? 'completed' : '' }}">
                                     <input
-                                        type="checkbox"
-                                        class="form-check-input"
-                                        name="completed"
-                                        onclick="this.form.submit()"
-                                        {{ $step->completed ? 'checked' : '' }}
+                                            type="checkbox"
+                                            class="form-check-input"
+                                            name="completed"
+                                            onclick="this.form.submit()"
+                                            {{ $step->completed ? 'checked' : '' }}
                                     >
                                     <span>{{ $step->description }}</span>
                                 </label>
                             </div>
                         </form>
+                        @include('tasks.tags', ['tags' => $step->tags])
                     </li>
                 @endforeach
             </ul>
@@ -61,15 +62,53 @@
 
             <div class="form-group">
                 <input
-                    type="text" class="form-control"
-                    placeholder="Шаг" name="description"
-                    value="{{ old('description') }}"
+                        type="text" class="form-control"
+                        placeholder="Шаг" name="description"
+                        value="{{ old('description') }}"
+                >
+                <input
+                        type="text" class="form-control"
+                        placeholder="Тэги" name="tags"
+                        value="{{ old('tags') }}"
                 >
             </div>
 
             <button type="submit" class="btn btn-primary">Отправить</button>
             @include('layout.errors')
         </form>
+
+        <hr>
+
+        <table class="table table-sm">
+            <thead>
+            <tr>
+                <th scope="col">Email</th>
+                <th scope="col">Время изменений</th>
+                <th scope="col">До</th>
+                <th scope="col">После</th>
+            </tr>
+            </thead>
+            <tbody>
+            @forelse($task->history as $item)
+                <tr>
+                    <th scope="row">{{ $item->email }}</th>
+                    <td>{{ $item->pivot->created_at->diffForHumans() }}</td>
+                    <td>
+                        @foreach(json_decode($item->pivot->before) as $key => $value)
+                            <p>{{ $key }} - {{ $value }}</p>
+                        @endforeach
+                    </td>
+                    <td>
+                        @foreach(json_decode($item->pivot->after) as $key => $value)
+                            <p>{{ $key }} - {{ $value }}</p>
+                        @endforeach
+                    </td>
+                </tr>
+            @empty
+                <th scope="row">Нет истории изменений</th>
+            @endforelse
+            </tbody>
+        </table>
 
         <br><br>
         <a href="{{ route('tasks.index', [], false) }}">Вернуться к списку задач.</a>
