@@ -2,6 +2,7 @@
 
 namespace App\Models\Task;
 
+use App\Models\Company;
 use App\Models\User;
 use App\Events\TaskCreated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -161,5 +162,10 @@ class Task extends Model
             ->belongsToMany(User::class, 'task_histories')
             ->withPivot(['before', 'after'])
             ->withTimestamps();
+    }
+
+    public function company()
+    {
+        return $this->hasOneThrough(Company::class, User::class, 'id', 'owner_id');
     }
 }
