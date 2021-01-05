@@ -25,6 +25,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Step whereTaskId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Step whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Task\Tag[] $tags
+ * @property-read int|null $tags_count
  */
 class Step extends Model
 {

@@ -22,6 +22,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Company whereOwnerId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Company whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \App\Models\Image|null $logo
+ * @property-read \App\Models\User $user
  */
 class Company extends Model
 {

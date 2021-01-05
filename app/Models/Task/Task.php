@@ -54,6 +54,7 @@ use Illuminate\Support\Arr;
  * @method static \Illuminate\Database\Query\Builder|Task withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Task withoutTrashed()
  * @mixin \Eloquent
+ * @property-read Company|null $company
  */
 class Task extends Model
 {
@@ -169,8 +170,8 @@ class Task extends Model
         return $this->hasOneThrough(Company::class, User::class, 'id', 'owner_id');
     }
 
-    public function comments()
-    {
-        return $this->morphToMany('App\Models\Comment', 'commentable');
-    }
+//    public function comments()
+//    {
+//        return $this->morphToMany('App\Models\Comment', 'commentable');
+//    }
 }
