@@ -1,14 +1,14 @@
-@extends('layout.master')
+@extends('admin.layout.master')
 
 @section('title', 'Список обращений')
 
 @section('content')
 
-    <div class="col-md-8 blog-main">
+    <div class="col-md-12 blog-main">
         <h1>Список обращений</h1>
         <br><br>
         <table class="table">
-            <thead>
+            <thead class="thead-dark">
             <tr>
                 <th scope="col">id</th>
                 <th scope="col">Email</th>
@@ -17,16 +17,20 @@
             </tr>
             </thead>
             <tbody>
-
-            @foreach($feedbacks as $feedback)
+            @if($feedbacks->count())
+                @foreach($feedbacks as $feedback)
+                    <tr>
+                        <th scope="row">{{ $feedback->id }}</th>
+                        <td>{{ $feedback->email }}</td>
+                        <td>{{ $feedback->message }}</td>
+                        <td>{{ $feedback->created_at->toFormattedDateString() }}</td>
+                    </tr>
+                @endforeach
+            @else
                 <tr>
-                    <th scope="row">{{ $feedback->id }}</th>
-                    <td>{{ $feedback->email }}</td>
-                    <td>{{ $feedback->message }}</td>
-                    <td>{{ $feedback->created_at->toFormattedDateString() }}</td>
+                    <td colspan="4"><h2>Обращения отсутствуют</h2></td>
                 </tr>
-            @endforeach
-
+            @endif
             </tbody>
         </table>
     </div>

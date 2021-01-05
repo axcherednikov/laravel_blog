@@ -9,7 +9,9 @@
 
 <body>
 <div class="container-fluid">
-    @include('layout.nav')
+    @section('nav')
+        @include('layout.nav')
+    @show
 
     <div class="container">
         @include('layout.flash_message')

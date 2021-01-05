@@ -12,7 +12,7 @@ class PostsController extends Controller
 {
     public function index()
     {
-        $posts = Post::latest()->get();
+        $posts = Post::simplePaginate(5);
 
         return view('admin.posts.index', compact('posts'));
     }
