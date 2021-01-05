@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ContactsController;
+use App\Http\Controllers\News\NewsController;
 use App\Http\Controllers\Posts\PostsController;
 use App\Http\Controllers\PushServiceController;
 use App\Http\Controllers\Tasks\CompletedStepsController;
@@ -30,6 +31,9 @@ Route::post('/tasks/{task}/step', [TaskStepsController::class, 'store'])->name('
 Route::post('/completed-steps/{step}', [CompletedStepsController::class, 'store'])->name('completed-steps.store');
 Route::delete('/completed-steps/{step}', [CompletedStepsController::class, 'destroy'])->name('completed-steps.destroy');
 Route::resource('/tasks', '\App\Http\Controllers\Tasks\TasksController');
+
+//Route news
+Route::get('/news', [NewsController::class, 'index'])->name('news.index');
 
 // Route Auth
 Auth::routes();
