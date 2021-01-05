@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Post\Tag;
 use App\Services\PostsService;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
@@ -21,6 +22,11 @@ class AppServiceProvider extends ServiceProvider
         \Blade::if('admin', fn() => auth()->check() && auth()->user()->isAdmin());
 
         Paginator::defaultSimpleView('pagination::simple-default');
+
+        Relation::$morphMap = [
+            'tasks' => 'App\Models\Task\Task',
+            'steps' => 'App\Models\Task\Step',
+        ];
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Post\Post;
+use App\Models\Task\Step;
 use App\Models\Task\Task;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -96,5 +97,15 @@ class User extends Authenticatable
     public function isAdmin(): bool
     {
         return $this->roles()->where('slug', '=', 'admin')->exists();
+    }
+
+    public function steps()
+    {
+        return $this->hasManyThrough(Step::class, Task::class, 'owner_id');
+    }
+
+    public function avatar()
+    {
+        return $this->morphOne(Image::class, 'imageable');
     }
 }
