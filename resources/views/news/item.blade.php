@@ -1,6 +1,6 @@
 <div class="blog-post">
     <h2 class="blog-post-title">
-        <a href="#">{{ $item->title }}</a>
+        <a href="{{ route('news.show', ['news' => $item->slug], false) }}">{{ $item->title }}</a>
     </h2>
 
     <p>{{ $item->description }}</p>

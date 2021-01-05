@@ -34,6 +34,7 @@ Route::resource('/tasks', '\App\Http\Controllers\Tasks\TasksController');
 
 //Route news
 Route::get('/news', [NewsController::class, 'index'])->name('news.index');
+Route::get('/news/{news}', [NewsController::class, 'show'])->name('news.show');
 
 // Route Auth
 Auth::routes();
