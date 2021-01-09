@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Post\Post;
-use App\Models\User;
+use App\Models\Tag\Tag;
 use Illuminate\Database\Seeder;
 
 class PostsSeeder extends Seeder
@@ -15,6 +15,10 @@ class PostsSeeder extends Seeder
      */
     public function run()
     {
-        Post::factory()->count(5)->create();
+        Post::factory()
+            ->count(5)
+            ->create()->each(function (Post $post) {
+                $post->tags()->sync(Tag::pluck('id')->random(rand(1, 7)));
+            });
     }
 }

@@ -5,9 +5,11 @@
 
     <p>{{ $item->description }}</p>
 
+    @include('tags.show', ['tagsNews' => $item->tags])
+
     <p class="blog-post-meta">{{ $item->created_at->toFormattedDateString() }}</p>
 
     @admin
-        <a href="#" class="btn btn-info">Редактировать</a>
+        <a href="{{ route('admin.news.update', ['news' => $item->slug], false) }}" class="btn btn-info">Редактировать</a>
     @endadmin
 </div>

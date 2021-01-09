@@ -12,7 +12,7 @@
         <p class="blog-post-meta">{{ $post->updated_at->toFormattedDateString() }}</p>
         <p>{{ $post->body }}</p>
 
-        @include('posts.tags', ['tagsPost' => $post->tags])
+        @include('tags.show', ['tagsPost' => $post->tags])
 
         <br>
         @can('update', $post)

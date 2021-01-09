@@ -6,13 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
 use App\Http\Requests\TagRequest;
 use App\Models\Post\Post;
-use App\Services\PostsService;
+use App\Services\TagService;
 
 class PostsController extends Controller
 {
     public function index()
     {
-        $posts = Post::simplePaginate(5);
+        $posts = Post::latest('id')->simplePaginate(5);
 
         return view('admin.posts.index', compact('posts'));
     }
@@ -22,9 +22,13 @@ class PostsController extends Controller
         return view('admin.posts.edit', compact('post'));
     }
 
-    public function update(Post $post, PostsService $postsService, PostRequest $postRequest, TagRequest $tagRequest)
+    public function update(Post $post, TagService $tagService, PostRequest $postRequest, TagRequest $tagRequest)
     {
-        $postsService->postUpdate($post, $tagRequest, $postRequest);
+        $post->update($postRequest->validated());
+
+        $tagService->setTags($post, $tagRequest);
+
+        flash('Статья успешно обновлена');
 
         return redirect()->route('admin.posts.index');
     }

@@ -1,12 +1,15 @@
 @extends('admin.layout.master')
 
-@section('title', 'Все статьи сайта')
+@section('title', 'Все статьи')
 
 @section('content')
 
     <div class="col-md-12 blog-main">
         <h1>Список статей</h1>
         <br><br>
+            <a class="btn btn-secondary" href="{{ route('posts.create', [], false) }}">Создать статью</a>
+        <br><br>
+
         <table class="table">
             <thead class="thead-dark">
             <tr>

@@ -14,6 +14,7 @@
                 <th scope="col">Email</th>
                 <th scope="col">Сообщение</th>
                 <th scope="col">Дата создания</th>
+                <th scope="col">Действие</th>
             </tr>
             </thead>
             <tbody>
@@ -24,6 +25,14 @@
                         <td>{{ $feedback->email }}</td>
                         <td>{{ $feedback->message }}</td>
                         <td>{{ $feedback->created_at->toFormattedDateString() }}</td>
+                        <td>
+                            <form action="{{ route('admin.feedback.destroy', ['feedback' => $feedback->id], false)}}" method="POST">
+                                @csrf
+                                @method('DELETE')
+
+                                <button class="btn btn-sm btn-outline-danger">Удалить</button>
+                            </form>
+                        </td>
                     </tr>
                 @endforeach
             @else
@@ -33,6 +42,8 @@
             @endif
             </tbody>
         </table>
+
+        {{ $feedbacks->links() }}
     </div>
 
 @endsection

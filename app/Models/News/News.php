@@ -2,7 +2,7 @@
 
 namespace App\Models\News;
 
-use Illuminate\Database\Eloquent\Builder;
+use App\Models\Tag\Tag;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -39,5 +39,10 @@ class News extends Model
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 }

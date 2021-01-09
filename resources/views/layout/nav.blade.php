@@ -58,7 +58,7 @@
 
             <a class="p-2 text-muted" href="{{ route('news.index', [], false) }}">Новости</a>
             <a class="p-2 text-muted" href="{{ route('about', [], false) }}">О нас</a>
-            <a class="p-2 text-muted" href="{{ route('contacts', [], false) }}">Контакты</a>
+            <a class="p-2 text-muted" href="{{ route('contacts.index', [], false) }}">Контакты</a>
             <a class="p-2 text-muted" href="{{ route('posts.create', [], false) }}">Создать статью</a>
 
             @admin

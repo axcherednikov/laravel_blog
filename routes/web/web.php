@@ -1,8 +1,6 @@
 <?php
 
 use App\Http\Controllers\AboutController;
-use App\Http\Controllers\ContactsController;
-use App\Http\Controllers\News\NewsController;
 use App\Http\Controllers\Posts\PostsController;
 use App\Http\Controllers\PushServiceController;
 use App\Http\Controllers\Tasks\CompletedStepsController;
@@ -18,8 +16,7 @@ Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/', [PostsController::class, 'index'])->name('home');
 
 // Route FeedBack
-Route::get('/contacts', [ContactsController::class, 'index'])->name('contacts');
-Route::post('/contacts', [ContactsController::class, 'store'])->name('feedback.store');
+Route::resource('/contacts', '\App\Http\Controllers\ContactsController')->only('index', 'store');
 
 // Route Posts
 Route::get('/posts/tags/{tag}', [\App\Http\Controllers\Posts\TagsController::class, 'index'])->name('posts.tags.index');
@@ -33,8 +30,8 @@ Route::delete('/completed-steps/{step}', [CompletedStepsController::class, 'dest
 Route::resource('/tasks', '\App\Http\Controllers\Tasks\TasksController');
 
 //Route news
-Route::get('/news', [NewsController::class, 'index'])->name('news.index');
-Route::get('/news/{news}', [NewsController::class, 'show'])->name('news.show');
+Route::get('/news/tags/{tag}', [\App\Http\Controllers\News\TagsController::class, 'index'])->name('news.tags.index');
+Route::resource('/news', '\App\Http\Controllers\News\NewsController')->only('index', 'show');
 
 // Route Auth
 Auth::routes();

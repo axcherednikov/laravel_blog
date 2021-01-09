@@ -3,13 +3,13 @@
 namespace App\Models\Task;
 
 use App\Models\Company;
+use App\Models\Tag\Tag;
 use App\Models\User;
 use App\Events\TaskCreated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;
-
 
 /**
  * App\Models\Task\Task

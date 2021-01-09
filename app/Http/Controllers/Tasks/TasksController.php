@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Tasks;
 
 use App\Http\Controllers\Controller;
-use App\Models\Task\Tag;
+use App\Http\Requests\TagRequest;
+use App\Models\Tag\Tag;
 use App\Models\Task\Task;
+use App\Services\TagService;
 use Illuminate\Database\Eloquent\Collection;
 
 class TasksController extends Controller
@@ -53,7 +55,7 @@ class TasksController extends Controller
         return view('tasks.edit', compact('task'));
     }
 
-    public function update(Task $task)
+    public function update(Task $task, TagService $tagService, TagRequest $tagRequest)
     {
         $validatedData = request()->validate([
             'title' => 'required',
@@ -62,32 +64,7 @@ class TasksController extends Controller
 
         $task->update($validatedData);
 
-        /** @var Collection $taskTags */
-        $taskTags = $task->tags->keyBy('name');
-
-        $tags = collect(explode(',', request('tags')))->keyBy(fn ($item) => $item);
-
-        $syncIds = $taskTags->intersectByKeys($tags)->pluck('id')->toArray();
-
-        $tagsToAttach = $tags->diffKeys($taskTags);
-
-//        $tagsToDetach = $taskTags->diffKeys($tags);
-//
-//        foreach ($tagsToAttach as $tag) {
-//            $tag = Tag::firstOrCreate(['name' => $tag]);
-//            $task->tags()->attach($tag);
-//        }
-//
-//        foreach ($tagsToDetach as $tag) {
-//            $task->tags()->detach($tag);
-//        }
-
-        foreach ($tagsToAttach as $tag) {
-            $tag = Tag::firstOrCreate(['name' => $tag]);
-            $syncIds[] = $tag->id;
-        }
-
-        $task->tags()->sync($syncIds);
+        $tagService->setTags($task, $tagRequest);
 
         flash('Задача успешно обновлена');
 

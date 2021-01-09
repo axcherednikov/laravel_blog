@@ -20,6 +20,8 @@ class ContactsController extends Controller
 
         Feedback::create($validatedData);
 
-        return redirect()->route('contacts');
+        flash('Сообщение отправлено');
+
+        return redirect()->route('contacts.index');
     }
 }

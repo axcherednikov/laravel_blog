@@ -2,7 +2,6 @@
 
 namespace Tests\Unit;
 
-use App\Models\Company;
 use App\Models\Task\Task;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;

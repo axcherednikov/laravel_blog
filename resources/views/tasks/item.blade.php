@@ -5,7 +5,7 @@
 
     <p class="blog-post-meta">{{ $task->created_at->toFormattedDateString() }}</p>
 
-    @include('tasks.tags', ['tagsTask' => $task->tags])
+    @include('tags.show', ['tagsTask' => $task->tags])
 
     {{ $task->body }}
 </div>

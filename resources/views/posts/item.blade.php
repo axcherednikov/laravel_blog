@@ -4,7 +4,8 @@
     </h2>
 
     <p>{{ $post->description }}</p>
-    @include('posts.tags', ['tagsPost' => $post->tags])
+
+    @include('tags.show', ['tagsPost' => $post->tags])
 
     <p class="blog-post-meta">{{ $post->created_at->toFormattedDateString() }}</p>
     @admin

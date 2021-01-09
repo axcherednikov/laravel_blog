@@ -7,11 +7,13 @@
             {{ $task->title }}
         </h3>
 
-        @include('tasks.tags', ['tags' => $task->tags])
+        @include('tags.show', ['tagsTask' => $task->tags])
 
         {{ $task->body }}
 
-        <br><br>
+        <br>
+        <br>
+
         <form method="post" action="{{ route('tasks.destroy', ['task' => $task->id], false) }}">
 
             @csrf
@@ -25,6 +27,7 @@
 
         <h4>Шаги выполнения задачи:</h4>
         <br>
+
         @if($task->steps->isNotEmpty())
             <ul class="list-group">
                 @foreach($task->steps as $step)
@@ -46,18 +49,19 @@
                                             onclick="this.form.submit()"
                                             {{ $step->completed ? 'checked' : '' }}
                                     >
+
                                     <span>{{ $step->description }}</span>
                                 </label>
                             </div>
                         </form>
-                        @include('tasks.tags', ['tags' => $step->tags])
+
+                        @include('tags.show', ['tagsStep' => $step->tags])
                     </li>
                 @endforeach
             </ul>
         @endif
 
-        <form class="card card-body mb-4" action="{{ route('steps.store', ['task' => $task->id], false) }}"
-              method="POST">
+        <form method="POST" class="card card-body mb-4" action="{{ route('steps.store', ['task' => $task->id], false) }}">
             @csrf
 
             <div class="form-group">
@@ -74,6 +78,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Отправить</button>
+
             @include('layout.errors')
         </form>
 
@@ -88,6 +93,7 @@
                 <th scope="col">После</th>
             </tr>
             </thead>
+
             <tbody>
             @forelse($task->history as $item)
                 <tr>

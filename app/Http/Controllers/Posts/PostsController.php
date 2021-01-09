@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
 use App\Http\Requests\TagRequest;
 use App\Models\Post\Post;
-use App\Services\PostsService;
+use App\Services\TagService;
 
 class PostsController extends Controller
 {
@@ -22,7 +22,7 @@ class PostsController extends Controller
 
     public function index()
     {
-        $posts = Post::latest()->get();
+        $posts = Post::latest()->paginate(5);
 
         return view('posts.index', compact('posts'));
     }
@@ -37,7 +37,7 @@ class PostsController extends Controller
         return view('posts.create');
     }
 
-    public function store(PostRequest $postRequest, TagRequest $tagRequest, PostsService $postsService)
+    public function store(PostRequest $postRequest, TagRequest $tagRequest, TagService $tagService)
     {
         $validatedData = $postRequest->validated();
 
@@ -45,7 +45,7 @@ class PostsController extends Controller
 
         $post = Post::create($validatedData);
 
-        $postsService->setTags($post, $tagRequest->validated());
+        $tagService->setTags($post, $tagRequest->validated());
 
         event(new PostCreated($post));
 
@@ -59,9 +59,13 @@ class PostsController extends Controller
         return view('posts.edit', compact('post'));
     }
 
-    public function update(Post $post, PostsService $postsService, PostRequest $postRequest, TagRequest $tagRequest)
+    public function update(Post $post, TagService $tagService, PostRequest $postRequest, TagRequest $tagRequest)
     {
-        $postsService->postUpdate($post, $tagRequest, $postRequest);
+        $post->update($postRequest->validated());
+
+        $tagService->setTags($post, $tagRequest);
+
+        flash('Статья успешно обновлена');
 
         event(new PostUpdated($post));
 

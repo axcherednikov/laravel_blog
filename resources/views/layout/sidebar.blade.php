@@ -5,16 +5,20 @@
         <h4 class="font-italic">Облако тэгов</h4>
         <br>
 
+        <h5>Тэги постов</h5>
+
+        @include('tags.show', ['tagsPost' => $tagsPostCloud])
+
+        <h5>Тэги новостей</h5>
+
+        @include('tags.show', ['tagsNews' => $tagsNewsCloud])
+
         @auth()
             <h5>Тэги задач</h5>
 
-            @include('tasks.tags', ['tagsTask' => $tagsTaskCloud])
+            @include('tags.show', ['tagsTask' => $tagsTaskCloud])
             <br>
         @endauth
-
-        <h5>Тэги постов</h5>
-
-        @include('posts.tags', ['tagsPost' => $tagsPostCloud])
     </div>
 
 </aside>
