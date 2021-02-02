@@ -10,6 +10,7 @@
     "require": {
         "php": "^8.0",
         "doctrine/dbal": "^2.12",
+        "facade/ignition": "^2.5",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^7.2",
@@ -21,7 +22,6 @@
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.5",
         "barryvdh/laravel-ide-helper": "^2.8",
-        "facade/ignition": "^2.5",
         "fzaninotto/faker": "^1.9",
         "mockery/mockery": "^1.4",
         "nunomaduro/collision": "^v5.1",

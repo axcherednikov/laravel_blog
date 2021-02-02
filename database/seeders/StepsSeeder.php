@@ -17,6 +17,6 @@ class StepsSeeder extends Seeder
     {
         Step::factory()
             ->count(30)
-            ->create(['task_id' => Task::pluck('id')->random(rand(1, 5))]);
+            ->create(['task_id' => Task::pluck('id')->random()]);
     }
 }
