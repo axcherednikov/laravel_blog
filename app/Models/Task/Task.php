@@ -91,6 +91,7 @@ class Task extends Model
 
         static::updating(function (Task $task) {
             $after = $task->getDirty();
+
             $task->history()->attach(auth()->id(), [
                 'before' => json_encode(Arr::only($task->fresh()->toArray(), array_keys($after))),
                 'after'  => json_encode($after),
@@ -169,9 +170,4 @@ class Task extends Model
     {
         return $this->hasOneThrough(Company::class, User::class, 'id', 'owner_id');
     }
-
-//    public function comments()
-//    {
-//        return $this->morphToMany('App\Models\Comment', 'commentable');
-//    }
 }

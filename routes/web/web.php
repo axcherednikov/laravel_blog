@@ -22,6 +22,7 @@ Route::resource('/contacts', '\App\Http\Controllers\ContactsController')->only('
 // Route Posts
 Route::get('/posts/tags/{tag}', [\App\Http\Controllers\Posts\TagsController::class, 'index'])->name('posts.tags.index');
 Route::post('/posts/comments/{post}', [CommentsController::class, 'store'])->name('posts.comments.store');
+Route::delete('/posts/comments/{comment}', [CommentsController::class, 'destroy'])->name('posts.comments.destroy');
 
 Route::resource('/posts', '\App\Http\Controllers\Posts\PostsController');
 

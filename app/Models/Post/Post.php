@@ -4,8 +4,10 @@ namespace App\Models\Post;
 
 use App\Models\Comment\Comment;
 use App\Models\Tag\Tag;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 
 /**
  * App\Models\Post\Post
@@ -44,6 +46,20 @@ class Post extends Model
 
     protected $guarded = [];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::updating(function (Post $post) {
+            $after = $post->getDirty();
+
+            $post->history()->attach(auth()->id(), [
+                'before' => json_encode(Arr::only($post->fresh()->toArray(), array_keys($after))),
+                'after'  => json_encode($after),
+            ]);
+        });
+    }
+
     public function getRouteKeyName()
     {
         return 'slug';
@@ -62,5 +78,13 @@ class Post extends Model
     public function comments()
     {
         return $this->morphMany(Comment::class, 'commentable');
+    }
+
+    public function history()
+    {
+        return $this
+            ->belongsToMany(User::class, 'post_histories')
+            ->withPivot(['before', 'after'])
+            ->withTimestamps();
     }
 }
