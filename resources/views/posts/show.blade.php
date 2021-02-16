@@ -76,77 +76,26 @@
 
         @include('layout.errors')
 
-        <form action="{{ route('posts.comments.store', ['post' => $post->slug], false) }}" method="post">
-
-            @csrf
-
-            <div class="row">
-
-                <div class="col">
-                    <div class="form-group">
-                        <label for="emailCommentInput">Email</label>
-
-                        <input type="email"
-                               class="form-control form-control-sm"
-                               id="emailCommentInput"
-                               name="email"
-                               value="{{ old('email') }}"
-                        >
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="form-group">
-                        <label for="nameCommentInput">Имя</label>
-
-                        <input type="text"
-                               class="form-control form-control-sm"
-                               id="nameCommentInput"
-                               name="owner_name"
-                               value="{{ old('owner_name') }}"
-                        >
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="form-group">
-                <label for="textareaComment">Комментарий</label>
-                <textarea class="form-control form-control-sm"
-                          id="textareaComment"
-                          rows="3"
-                          name="comment">{{ old('comment') }}</textarea>
-            </div>
-
-            <button type="submit" class="btn btn-primary btn-sm">Отправить</button>
-        </form>
+        @auth
+            @include('forms.comments', [
+                'route' => 'posts.comments.store',
+                'modelType' => 'post',
+                'model' => $post,
+            ])
+        @endauth
 
         <hr>
 
         @forelse($post->comments as $comment)
             <div class="shadow-sm p-3 mb-5 bg-white rounded">
                 <p class="text-muted">
-                    {{ $comment->owner_name }} - {{ $comment->email }}
+                    {{ $comment->owner->name }} - {{ $comment->created_at->diffForHumans() }}
                 </p>
 
                 <p class="text-monospace">
                     {{ $comment->comment }}
                 </p>
-
-                @admin
-                <form action="{{ route('posts.comments.destroy', ['comment' => $comment->id], false) }}"
-                      method="post">
-                    @csrf
-
-                    @method('DELETE')
-
-                    <button class="btn btn-sm btn-danger" type="submit">Удалить</button>
-                </form>
-                @endadmin
-
             </div>
-        @empty
-            <p>Комментарии отсутствуют</p>
         @endforelse
     </div>
 

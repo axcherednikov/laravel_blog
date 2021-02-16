@@ -17,8 +17,7 @@ class CreateCommentsTable extends Migration
             $table->id();
             $table->morphs('commentable');
             $table->string('comment', 1000);
-            $table->string('email', 40);
-            $table->string('owner_name', 40);
+            $table->bigInteger('owner_id');
             $table->timestamps();
         });
     }

@@ -2,6 +2,7 @@
 
 namespace App\Models\Comment;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -39,5 +40,10 @@ class Comment extends Model
     public function commentable()
     {
         return $this->morphTo();
+    }
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'owner_id');
     }
 }

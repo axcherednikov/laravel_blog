@@ -11,12 +11,15 @@ class CommentsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('admin')->only('destroy');
+        $this->middleware('auth');
     }
 
     public function store(Post $post, CommentRequest $request)
     {
-        $post->comments()->create($request->validated());
+        $post->comments()->create([
+            'comment' => $request->comment,
+            'owner_id' => $request->user()->id,
+        ]);
 
         flash('Комментрий добавлен');
 
