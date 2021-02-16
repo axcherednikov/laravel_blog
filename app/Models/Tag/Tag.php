@@ -1,18 +1,26 @@
 <?php
 
-namespace App\Models\Task;
+namespace App\Models\Tag;
 
+use App\Models\News\News;
+use App\Models\Post\Post;
+use App\Models\Task\Step;
+use App\Models\Task\Task;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\Models\Task\Tag
+ * App\Models\Tag\Tag
  *
  * @property int $id
  * @property string $name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Task\Task[] $tasks
+ * @property-read \Illuminate\Database\Eloquent\Collection|Post[] $posts
+ * @property-read int|null $posts_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|Step[] $steps
+ * @property-read int|null $steps_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|Task[] $tasks
  * @property-read int|null $tasks_count
  * @method static \Illuminate\Database\Eloquent\Builder|Tag newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Tag newQuery()
@@ -22,12 +30,24 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|News[] $news
+ * @property-read int|null $news_count
  */
 class Tag extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
+
+    public function getRouteKeyName()
+    {
+        return 'name';
+    }
+
+    public function posts()
+    {
+        return $this->morphedByMany(Post::class, 'taggable');
+    }
 
     public function tasks()
     {
@@ -39,13 +59,23 @@ class Tag extends Model
         return $this->morphedByMany(Step::class, 'taggable');
     }
 
-    public function getRouteKeyName()
+    public function news()
     {
-        return 'name';
+        return $this->morphedByMany(News::class, 'taggable');
     }
 
-    public static function tagsCloud()
+    public static function tagsTaskCloud()
     {
         return (new static)->has('tasks')->get();
+    }
+
+    public static function tagsPostCloud()
+    {
+        return (new static)->has('posts')->get();
+    }
+
+    public static function tagsNewsCloud()
+    {
+        return (new static)->has('news')->get();
     }
 }

@@ -41,6 +41,9 @@ use Illuminate\Notifications\Notifiable;
  * @property-read int|null $roles_count
  * @property-read \Illuminate\Database\Eloquent\Collection|Post[] $posts
  * @property-read int|null $posts_count
+ * @property-read \App\Models\Image|null $avatar
+ * @property-read \Illuminate\Database\Eloquent\Collection|Step[] $steps
+ * @property-read int|null $steps_count
  */
 class User extends Authenticatable
 {

@@ -3,13 +3,13 @@
 namespace App\Models\Task;
 
 use App\Models\Company;
+use App\Models\Tag\Tag;
 use App\Models\User;
 use App\Events\TaskCreated;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;
-
 
 /**
  * App\Models\Task\Task
@@ -54,6 +54,7 @@ use Illuminate\Support\Arr;
  * @method static \Illuminate\Database\Query\Builder|Task withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Task withoutTrashed()
  * @mixin \Eloquent
+ * @property-read Company|null $company
  */
 class Task extends Model
 {
@@ -90,6 +91,7 @@ class Task extends Model
 
         static::updating(function (Task $task) {
             $after = $task->getDirty();
+
             $task->history()->attach(auth()->id(), [
                 'before' => json_encode(Arr::only($task->fresh()->toArray(), array_keys($after))),
                 'after'  => json_encode($after),
@@ -167,10 +169,5 @@ class Task extends Model
     public function company()
     {
         return $this->hasOneThrough(Company::class, User::class, 'id', 'owner_id');
-    }
-
-    public function comments()
-    {
-        return $this->morphToMany('App\Models\Comment', 'commentable');
     }
 }

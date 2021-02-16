@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Post\Tag;
+use App\Models\Tag\Tag;
 use Illuminate\Database\Seeder;
 
-class TagsToPostsSeeder extends Seeder
+class TagsSeeder extends Seeder
 {
     /**
      * Run the database seeds.

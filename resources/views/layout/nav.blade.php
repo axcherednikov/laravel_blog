@@ -22,7 +22,8 @@
                     <a class="btn btn-sm btn-outline-secondary" href="{{ route('login') }}">{{ __('Login') }}</a>
 
                     @if (Route::has('register'))
-                        <a class="btn btn-sm btn-outline-secondary" href="{{ route('register') }}">{{ __('Register') }}</a>
+                        <a class="btn btn-sm btn-outline-secondary"
+                           href="{{ route('register') }}">{{ __('Register') }}</a>
                     @endif
                 @else
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
@@ -49,14 +50,21 @@
 
     <div class="nav-scroller py-1 mb-2">
         <nav class="nav d-flex justify-content-between">
-            <a class="p-2 text-muted" href="{{ route('home', [], false) }}">Главная</a>
-            <a class="p-2 text-muted" href="{{ route('tasks.index', [], false) }}">Задачи</a>
+            <a class="p-2 text-muted" href="{{ route('home', [], false) }}">Главная
+
+            @auth()
+                <a class="p-2 text-muted" href="{{ route('tasks.index', [], false) }}">Задачи</a>
+            @endauth
+
+            <a class="p-2 text-muted" href="{{ route('news.index', [], false) }}">Новости</a>
             <a class="p-2 text-muted" href="{{ route('about', [], false) }}">О нас</a>
-            <a class="p-2 text-muted" href="{{ route('contacts', [], false) }}">Контакты</a>
+            <a class="p-2 text-muted" href="{{ route('contacts.index', [], false) }}">Контакты</a>
             <a class="p-2 text-muted" href="{{ route('posts.create', [], false) }}">Создать статью</a>
+
             @admin
                 <a class="p-2 text-muted" href="{{ route('admin.home', [], false) }}">Админ. раздел</a>
             @endadmin
+
         </nav>
     </div>
 </div>
