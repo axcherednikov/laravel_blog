@@ -2,6 +2,7 @@
 
 namespace App\Models\News;
 
+use App\Models\Comment\Comment;
 use App\Models\Contracts\HasTags;
 use App\Models\Tag\Tag;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -47,5 +48,10 @@ class News extends Model implements HasTags
     public function tags()
     {
         return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
     }
 }
