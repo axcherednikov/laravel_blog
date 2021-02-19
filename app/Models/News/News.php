@@ -2,6 +2,7 @@
 
 namespace App\Models\News;
 
+use App\Models\Contracts\HasTags;
 use App\Models\Tag\Tag;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -32,7 +33,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \Illuminate\Database\Eloquent\Collection|Tag[] $tags
  * @property-read int|null $tags_count
  */
-class News extends Model
+class News extends Model implements HasTags
 {
     use HasFactory;
 

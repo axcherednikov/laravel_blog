@@ -96,6 +96,8 @@
                     {{ $comment->comment }}
                 </p>
             </div>
+        @empty
+            <p class="text-monospace">Комментарии отсутствуют</p>
         @endforelse
     </div>
 

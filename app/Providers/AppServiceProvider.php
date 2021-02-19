@@ -7,7 +7,6 @@ use App\Models\Post\Post;
 use App\Models\Tag\Tag;
 use App\Models\Task\Step;
 use App\Models\Task\Task;
-use App\Services\TagService;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
@@ -22,8 +21,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(TagService::class, fn() => new TagService());
-
         Blade::if('admin', fn() => auth()->check() && auth()->user()->isAdmin());
 
         Paginator::defaultSimpleView('pagination::simple-default');

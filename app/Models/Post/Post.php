@@ -3,6 +3,7 @@
 namespace App\Models\Post;
 
 use App\Models\Comment\Comment;
+use App\Models\Contracts\HasTags;
 use App\Models\Tag\Tag;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -40,7 +41,7 @@ use Illuminate\Support\Arr;
  * @property-read \Illuminate\Database\Eloquent\Collection|Comment[] $comments
  * @property-read int|null $comments_count
  */
-class Post extends Model
+class Post extends Model implements HasTags
 {
     use HasFactory;
 
