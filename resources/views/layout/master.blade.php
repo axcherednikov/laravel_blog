@@ -4,31 +4,39 @@
     <meta charset="utf-8">
     <title>@yield('title', config('app.name'))</title>
 
+    {{-- CSRF-TOKEN --}}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
 </head>
 
-<body>
-<div class="container-fluid">
-    @include('layout.nav')
-
+<body class="d-flex flex-column min-vh-100">
+<div class="wrapper flex-grow-1">
     <div class="container">
-        @include('layout.flash_message')
+        @section('nav')
+            @include('layout.nav')
+        @show
+
+        <div class="container">
+            @include('layout.flash_message')
+        </div>
+
+        <main role="main" class="container py-4" id="app">
+            <div class="row">
+
+                @yield('content')
+
+                @section('sidebar')
+                    @include('layout.sidebar')
+                @show
+
+            </div>
+        </main>
     </div>
-
-    <main role="main" class="container py-4" id="app">
-        <div class="row">
-
-            @yield('content')
-
-            @section('sidebar')
-                @include('layout.sidebar')
-            @show
-
-        </div><!-- /.row -->
-    </main><!-- /.container -->
-
-    @include('layout.footer')
 </div>
+
+@include('layout.footer')
+
 <script src="{{ mix('/js/manifest.js') }}"></script>
 <script src="{{ mix('/js/vendor.js') }}"></script>
 <script src="{{ mix('/js/app.js') }}"></script>

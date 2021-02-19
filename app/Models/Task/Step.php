@@ -2,6 +2,8 @@
 
 namespace App\Models\Task;
 
+use App\Models\Contracts\HasTags;
+use App\Models\Tag\Tag;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,6 +16,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $completed
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|Tag[] $tags
+ * @property-read int|null $tags_count
  * @property-read \App\Models\Task\Task $task
  * @method static \Illuminate\Database\Eloquent\Builder|Step newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Step newQuery()
@@ -26,7 +30,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Step whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Step extends Model
+class Step extends Model implements HasTags
 {
     use HasFactory;
 
@@ -37,12 +41,12 @@ class Step extends Model
         return $this->belongsTo(Task::class);
     }
 
-    public function complete($complete = true)
+    public function complete($complete = true): void
     {
         $this->update(['completed' => $complete]);
     }
 
-    public function incomplete()
+    public function incomplete(): void
     {
         $this->complete(false);
     }

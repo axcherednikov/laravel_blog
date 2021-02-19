@@ -1,8 +1,8 @@
 <?php
 
-namespace Database\Factories\Post;
+namespace Database\Factories\Tag;
 
-use App\Models\Post\Tag;
+use App\Models\Tag\Tag;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TagFactory extends Factory
@@ -22,7 +22,7 @@ class TagFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->words(1, true),
+            'name' => $this->faker->unique()->words(1, true),
         ];
     }
 }

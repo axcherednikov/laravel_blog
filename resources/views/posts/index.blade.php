@@ -15,14 +15,11 @@
                     @include('posts.item')
                 @endif
             @endforeach
-        @else
-            <p>В данный момент статьи отсутствуют</p>
-        @endif
 
-{{--        <nav class="blog-pagination">
-            <a class="btn btn-outline-primary" href="#">Older</a>
-            <a class="btn btn-outline-secondary disabled" href="#" tabindex="-1" aria-disabled="true">Newer</a>
-        </nav>--}}
+            {{ $posts->links() }}
+        @else
+            <h3>В данный момент статьи отсутствуют</h3>
+        @endif
     </div>
 
 @endsection
