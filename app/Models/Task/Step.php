@@ -2,6 +2,7 @@
 
 namespace App\Models\Task;
 
+use App\Models\Contracts\HasTags;
 use App\Models\Tag\Tag;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -29,7 +30,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Step whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Step extends Model
+class Step extends Model implements HasTags
 {
     use HasFactory;
 

@@ -3,6 +3,7 @@
 namespace App\Models\Task;
 
 use App\Models\Company;
+use App\Models\Contracts\HasTags;
 use App\Models\Tag\Tag;
 use App\Models\User;
 use App\Events\TaskCreated;
@@ -56,7 +57,7 @@ use Illuminate\Support\Arr;
  * @mixin \Eloquent
  * @property-read Company|null $company
  */
-class Task extends Model
+class Task extends Model implements HasTags
 {
     use HasFactory;
     use SoftDeletes;

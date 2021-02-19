@@ -27,4 +27,11 @@ class TagRequest extends FormRequest
             'tags' => 'nullable',
         ];
     }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'tags' => explode(',', $this->input('tags')),
+        ]);
+    }
 }
