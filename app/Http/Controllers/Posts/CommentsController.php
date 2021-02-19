@@ -16,12 +16,9 @@ class CommentsController extends Controller
 
     public function store(Post $post, CommentRequest $request)
     {
-        $post->comments()->create([
-            'comment' => $request->comment,
-            'owner_id' => $request->user()->id,
-        ]);
+        $post->comments()->create($request->all());
 
-        flash('Комментрий добавлен');
+        flash('Комментарий добавлен');
 
         return back();
     }

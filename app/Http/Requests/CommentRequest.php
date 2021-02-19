@@ -27,4 +27,11 @@ class CommentRequest extends FormRequest
             'comment'  => 'required|string|max:1000',
         ];
     }
+
+    public function prepareForValidation()
+    {
+        $this->merge([
+            'owner_id' => $this->user()->id,
+        ]);
+    }
 }
