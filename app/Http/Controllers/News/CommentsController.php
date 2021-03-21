@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Posts;
+namespace App\Http\Controllers\News;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CommentRequest;
-use App\Models\Comment\Comment;
-use App\Models\Post\Post;
+use App\Models\News\News;
 
 class CommentsController extends Controller
 {
@@ -14,9 +13,9 @@ class CommentsController extends Controller
         $this->middleware('auth');
     }
 
-    public function store(Post $post, CommentRequest $request)
+    public function store(News $news, CommentRequest $request)
     {
-        $post->comments()->create($request->all());
+        $news->comments()->create($request->all());
 
         flash('Комментарий добавлен');
 

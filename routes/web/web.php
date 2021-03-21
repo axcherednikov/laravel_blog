@@ -19,10 +19,13 @@ Route::get('/', [PostsController::class, 'index'])->name('home');
 // Route FeedBack
 Route::resource('/contacts', '\App\Http\Controllers\ContactsController')->only('index', 'store');
 
+// Route Tags
+Route::get('/tags/{tag}', [\App\Http\Controllers\Tags\TagsController::class, 'index'])->name('tags.index');
+
 // Route Posts
-Route::get('/posts/tags/{tag}', [\App\Http\Controllers\Posts\TagsController::class, 'index'])->name('posts.tags.index');
 Route::post('/posts/comments/{post}', [CommentsController::class, 'store'])->name('posts.comments.store');
-Route::delete('/posts/comments/{comment}', [CommentsController::class, 'destroy'])->name('posts.comments.destroy');
+Route::delete('/posts/comments/{comment}', [\App\Http\Controllers\Comments\CommentsController::class, 'destroy'])
+    ->name('posts.comment.destroy');
 
 Route::resource('/posts', '\App\Http\Controllers\Posts\PostsController');
 
@@ -31,11 +34,12 @@ Route::get('/tasks/tags/{tag}', [TagsController::class, 'index'])->name('tasks.t
 Route::post('/tasks/{task}/step', [TaskStepsController::class, 'store'])->name('steps.store');
 Route::post('/completed-steps/{step}', [CompletedStepsController::class, 'store'])->name('completed-steps.store');
 Route::delete('/completed-steps/{step}', [CompletedStepsController::class, 'destroy'])->name('completed-steps.destroy');
-
 Route::resource('/tasks', '\App\Http\Controllers\Tasks\TasksController');
 
 //Route news
-Route::get('/news/tags/{tag}', [\App\Http\Controllers\News\TagsController::class, 'index'])->name('news.tags.index');
+Route::post('/news/comments/{news}', [\App\Http\Controllers\News\CommentsController::class, 'store'])->name('news.comments.store');
+Route::delete('/news/comments/{comment}', [\App\Http\Controllers\Comments\CommentsController::class, 'destroy'])
+    ->name('news.comments.destroy');
 
 Route::resource('/news', '\App\Http\Controllers\News\NewsController')->only('index', 'show');
 
