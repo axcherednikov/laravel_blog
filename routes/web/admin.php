@@ -1,12 +1,10 @@
 <?php
 
-use App\Http\Controllers\Admin\FeedbackController;
+use App\Http\Controllers\Admin\HomeController;
 use Illuminate\Support\Facades\Route;
 
 // Route Home
-Route::get('/', function () {
-    return view('admin.index');
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Route Feedback
 Route::resource('/feedback', '\App\Http\Controllers\Admin\FeedbackController')->only('index', 'destroy');

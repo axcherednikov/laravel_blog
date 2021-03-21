@@ -13,6 +13,19 @@
         <p>{{ $news->body }}</p>
 
         <hr>
+
+        @auth
+            @include('forms.comments', [
+                'route' => 'news.comments.store',
+                'modelType' => 'news',
+                'model' => $news,
+            ])
+        @endauth
+
+        <hr>
+
+        @include('layout.comments', ['model' => $news])
+
         <a class="btn btn-secondary" href="{{ back()->getTargetUrl() }}">Вернуться к новостям</a>
     </div>
 

@@ -17,7 +17,7 @@
 @if($tagsPost->isNotEmpty())
     <div>
         @foreach($tagsPost as $tag)
-            <a href="{{ route('posts.tags.index', ['tag' => $tag->getRouteKey()], false) }}"
+            <a href="{{ route('tags.index', ['tag' => $tag->getRouteKey()], false) }}"
                class="badge badge-secondary">{{ $tag->name }}</a>
         @endforeach
     </div>
@@ -26,7 +26,7 @@
 @if($tagsNews->isNotEmpty())
     <div>
         @foreach($tagsNews as $tag)
-            <a href="{{ route('news.tags.index', ['tag' => $tag->getRouteKey()], false) }}"
+            <a href="{{ route('tags.index', ['tag' => $tag->getRouteKey()], false) }}"
                class="badge badge-secondary">{{ $tag->name }}</a>
         @endforeach
     </div>
