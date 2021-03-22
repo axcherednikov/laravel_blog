@@ -28,7 +28,7 @@ class PostRequest extends FormRequest
 
         if ($this->input('publish') == null) {
             $this->merge([
-               'publish' => false,
+                'publish' => false,
             ]);
         }
     }
