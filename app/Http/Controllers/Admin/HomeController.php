@@ -18,18 +18,14 @@ class HomeController extends Controller
         $summary['max_count_posts_per_user'] = User::whereHas('posts')
             ->withCount('posts')
             ->orderByDesc('posts_count')
-            ->limit(1)
-            ->get()
             ->first()
             ->name;
 
-        $summary['max_length_posts'] = \DB::table('posts')
-            ->selectRaw('length(body) as length_post, title, slug')
+        $summary['max_length_posts'] = Post::selectRaw('length(body) as length_post, title, slug')
             ->orderByDesc('length_post')
             ->first();
 
-        $summary['min_length_posts'] = \DB::table('posts')
-            ->selectRaw('length(body) as length_post, title, slug')
+        $summary['min_length_posts'] = Post::selectRaw('length(body) as length_post, title, slug')
             ->orderBy('length_post')
             ->first();
 
@@ -41,14 +37,12 @@ class HomeController extends Controller
         $summary['max_change_post'] = Post::whereHas('history')
             ->withCount('history')
             ->orderByDesc('history_count')
-            ->limit(1)
             ->first()
             ->title;
 
         $summary['max_comments_post'] = Post::whereHas('comments')
             ->withCount('comments')
             ->orderByDesc('comments_count')
-            ->limit(1)
             ->first()
             ->title;
 

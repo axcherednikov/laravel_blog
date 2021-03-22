@@ -10,7 +10,7 @@
         <br>
 
         @forelse($news as $newsItem)
-            <a href="{{ route('news.show', ['news' => $newsItem->slug]) }}">
+            <a href="{{ route('news.show', ['news' => $newsItem]) }}">
                 <h3 class="h4">
                     {{ $newsItem->title }}
                 </h3>
@@ -27,7 +27,7 @@
         <br>
 
         @forelse($posts as $post)
-            <a href="{{ route('posts.show', ['post' => $post->slug]) }}">
+            <a href="{{ route('posts.show', ['post' => $post]) }}">
                 <h3 class="h4">
                     {{ $post->title }}
                 </h3>
