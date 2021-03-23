@@ -5,7 +5,7 @@
         <h4 class="font-italic">Облако тэгов</h4>
         <br>
 
-        <h5>Тэги постов</h5>
+        <h5>Тэги статей</h5>
 
         @include('tags.show', ['tagsPost' => $tagsPostCloud])
 
