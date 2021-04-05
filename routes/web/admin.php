@@ -14,3 +14,6 @@ Route::resource('/posts', '\App\Http\Controllers\Admin\Posts\PostsController')->
 
 // Route News
 Route::resource('/news', '\App\Http\Controllers\Admin\News\NewsController');
+
+// Route Reports
+Route::resource('/reports', '\App\Http\Controllers\Admin\ReportsController')->only('index');
