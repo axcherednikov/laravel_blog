@@ -4,10 +4,16 @@ namespace App\Mail;
 
 class ReportsCreate extends AbstractEmails
 {
-    public function __construct(public string $reports) { }
+    public function __construct(public string $reports, public array $pathToFile) { }
 
     public function build()
     {
-        return $this->markdown('mail.reports');
+        $message = $this->markdown('mail.reports');
+
+        for ($i = 0; $i < count($this->pathToFile); $i++) {
+            $message->attach($this->pathToFile[$i]);
+        }
+
+        return $message;
     }
 }
