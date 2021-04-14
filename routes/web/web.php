@@ -37,7 +37,8 @@ Route::delete('/completed-steps/{step}', [CompletedStepsController::class, 'dest
 Route::resource('/tasks', '\App\Http\Controllers\Tasks\TasksController');
 
 //Route news
-Route::post('/news/comments/{news}', [\App\Http\Controllers\News\CommentsController::class, 'store'])->name('news.comments.store');
+Route::post('/news/comments/{news}', [\App\Http\Controllers\News\CommentsController::class, 'store'])
+    ->name('news.comments.store');
 Route::delete('/news/comments/{comment}', [\App\Http\Controllers\Comments\CommentsController::class, 'destroy'])
     ->name('news.comments.destroy');
 
