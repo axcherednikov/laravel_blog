@@ -18,7 +18,7 @@
                     name="reports_list[]"
                 >
                     @foreach($models as $class => $name)
-                        <option value="{{ $class . '|' . $name }}">{{ $name }}</option>
+                        <option value="{{ $class }}">{{ $name }}</option>
                     @endforeach
                 </select>
             </div>

@@ -5,7 +5,9 @@ namespace App\Jobs;
 use App\Exports\Export;
 use App\Mail\ReportsCreate;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Contracts\Translation\Translator;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
@@ -15,6 +17,8 @@ use Maatwebsite\Excel\Facades\Excel;
 class CountModelsReport implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    const NAME_TRANS_FILE = 'models';
 
     public function __construct(public array $models, public string $emailUser) { }
 
@@ -28,8 +32,8 @@ class CountModelsReport implements ShouldQueue
     {
         $string = '';
 
-        foreach ($this->models as $model => $name) {
-            $string .= $name . ' ' . $model::all()->count() . '<br>';
+        foreach ($this->models as $model) {
+            $string .= $this->getNameModel($model) . ': ' . $model::count() . '<br>';
         }
 
         return $string;
@@ -39,10 +43,17 @@ class CountModelsReport implements ShouldQueue
     {
         $pathToFiles = [];
 
-        foreach ($this->models as $modes => $name) {
-            $pathToFiles[] = Excel::download(new Export($modes), $name . '_отчёт.xlsx')->getFile()->getPathname();
+        foreach ($this->models as $model) {
+            $pathToFiles[] = Excel::download(new Export($model), $this->getNameModel($model) . '.xlsx')
+                ->getFile()
+                ->getPathname();
         }
 
         return $pathToFiles;
+    }
+
+    private function getNameModel($model): array|string|Translator|Application|null
+    {
+        return trans( self::NAME_TRANS_FILE . '.' . $model);
     }
 }
