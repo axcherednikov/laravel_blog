@@ -17,6 +17,6 @@ Route::resource('/posts', '\App\Http\Controllers\Admin\Posts\PostsController')->
 Route::resource('/news', '\App\Http\Controllers\Admin\News\NewsController');
 
 // Route Reports
-Route::resource('/reports', '\App\Http\Controllers\Admin\ReportsController')->only('index');
+Route::get('/reports', [ReportsController::class, 'index'])->name('reports.index');
 Route::get('/reports/total', [ReportsController::class, 'total'])->name('reports.total');
 Route::post('/reports/generate', [ReportsController::class, 'generate'])->name('reports.generate');
