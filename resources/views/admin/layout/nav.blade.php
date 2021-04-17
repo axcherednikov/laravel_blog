@@ -19,6 +19,10 @@
                 <li class="nav-item {{ request()->is('admin/feedback*')  ? 'active' : ''}}">
                     <a class="nav-link" href="{{ route('admin.feedback.index', [], false) }}">Список обращений</a>
                 </li>
+
+                <li class="nav-item {{ request()->is('admin/reports*')  ? 'active' : ''}}">
+                    <a class="nav-link" href="{{ route('admin.reports.index', [], false) }}">Отчёты</a>
+                </li>
             </ul>
 
         {{-- <a class="btn btn-outline-success my-2 my-sm-0" >Search</a> --}}
