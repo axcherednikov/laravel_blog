@@ -7,6 +7,8 @@
             {{ $task->title }}
         </h3>
 
+        <task-update task-id="{{ $task->id }}"></task-update>
+
         @include('tags.show', ['tagsTask' => $task->tags])
 
         {{ $task->body }}
