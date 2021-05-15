@@ -2,6 +2,7 @@
 
 namespace App\Models\Task;
 
+use App\Events\TaskUpdated;
 use App\Models\Company;
 use App\Models\Contracts\HasTags;
 use App\Models\Tag\Tag;
@@ -66,6 +67,7 @@ class Task extends Model implements HasTags
 
     protected $dispatchesEvents = [
         'created' => TaskCreated::class,
+        'updated' => TaskUpdated::class,
     ];
 
     protected $attributes = [
