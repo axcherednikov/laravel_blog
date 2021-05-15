@@ -3,11 +3,11 @@
 <head>
     <meta charset="utf-8">
     <title>@yield('title', config('app.name'))</title>
-
-    {{-- CSRF-TOKEN --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
+    <script>
+        let userId = {{ auth()->id() }};
+    </script>
 </head>
 
 <body class="d-flex flex-column min-vh-100">
@@ -31,6 +31,7 @@
                 @show
 
             </div>
+            <chat></chat>
         </main>
     </div>
 </div>

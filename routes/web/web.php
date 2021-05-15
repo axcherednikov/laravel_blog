@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\ChatMessage;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\Posts\CommentsController;
 use App\Http\Controllers\Posts\PostsController;
@@ -53,3 +54,7 @@ Route::post('/companies', function () {
 
 Route::get('/service', [PushServiceController::class, 'form'])->name('service.form');
 Route::post('/service', [PushServiceController::class, 'send'])->name('service.send');
+
+Route::post('/chat', function () {
+    broadcast(new ChatMessage(request('message'), auth()->user()))->toOthers();
+})->middleware('auth');
