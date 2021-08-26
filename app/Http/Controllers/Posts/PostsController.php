@@ -45,7 +45,7 @@ class PostsController extends Controller
 
         $post = Post::create($validatedData);
 
-        $tagService->setTags($post, $tagRequest->validated());
+        $tagService->setTags($post, $tagRequest);
 
         event(new PostCreated($post));
 

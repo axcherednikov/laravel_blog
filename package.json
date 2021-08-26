@@ -25,7 +25,5 @@
         "vue": "^2.5.17",
         "vue-template-compiler": "^2.6.12"
     },
-    "dependencies": {
-        "socket.io-client": "^4.0.1"
-    }
+    "dependencies": {}
 }
