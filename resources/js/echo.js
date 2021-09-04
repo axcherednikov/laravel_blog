@@ -11,11 +11,19 @@ Echo
     });
 
 Echo
-    .private('admin-report')
+    .private('update.post.report')
     .listen('.post.updated', (e) => {
-        console.log(e);
         popupS.alert({
             title: 'Измененная статья' + e.title,
             content: e.message,
+        })
+    });
+
+Echo
+    .private('total.admin.report')
+    .listen('.create.admin.report', (e) => {
+        popupS.alert({
+            title: 'Отчёт',
+            content: e.report
         })
     });

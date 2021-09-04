@@ -3,7 +3,6 @@
 namespace App\Events\Posts;
 
 use App\Models\Post\Post;
-use Arr;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
@@ -20,7 +19,7 @@ class PostUpdated extends AbstractPostsEvents implements ShouldBroadcast
 
     public function broadcastOn(): PrivateChannel
     {
-        return new PrivateChannel('admin-report');
+        return new PrivateChannel('update.post.report');
     }
 
     public function broadcastAs(): string
@@ -31,7 +30,7 @@ class PostUpdated extends AbstractPostsEvents implements ShouldBroadcast
     public function createMessage(Post $post): string
     {
         $after = $post->getDirty();
-        $before = Arr::only($post->fresh()->toArray(), array_keys($after));
+        $before = \Arr::only($post->fresh()->toArray(), array_keys($after));
 
         $message = '<p>Новые данные: ' . json_encode($after, JSON_UNESCAPED_UNICODE) . '</p>';
         $message .= '<p>Старые данные: ' . json_encode($before, JSON_UNESCAPED_UNICODE) . '</p>';
