@@ -37,14 +37,12 @@ class HomeController extends Controller
         $summary['max_change_post'] = Post::whereHas('history')
             ->withCount('history')
             ->orderByDesc('history_count')
-            ->first()
-            ->title;
+            ->first();
 
         $summary['max_comments_post'] = Post::whereHas('comments')
             ->withCount('comments')
             ->orderByDesc('comments_count')
-            ->first()
-            ->title;
+            ->first();
 
         return view('admin.index', compact('summary'));
     }

@@ -67,11 +67,11 @@
             </tr>
             <tr>
                 <td>Часто изменяемая статья</td>
-                <td>{{ $summary['max_change_post'] }}</td>
+                <td>{{ isset($summary['max_change_post']) ? $summary['max_change_post']->title : 'Статья отсутствует' }}</td>
             </tr>
             <tr>
                 <td>Самая комментируемая статья</td>
-                <td>{{ $summary['max_comments_post'] }}</td>
+                <td>{{ isset($summary['max_comments_post']) ? $summary['max_comments_post']->title : 'Статья отсутствует' }}</td>
             </tr>
             </tbody>
         </table>

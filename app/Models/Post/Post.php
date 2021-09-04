@@ -2,6 +2,7 @@
 
 namespace App\Models\Post;
 
+use App\Events\Posts\PostUpdated;
 use App\Models\Comment\Comment;
 use App\Models\Contracts\HasTags;
 use App\Models\Tag\Tag;
@@ -58,6 +59,8 @@ class Post extends Model implements HasTags
                 'before' => json_encode(Arr::only($post->fresh()->toArray(), array_keys($after))),
                 'after'  => json_encode($after),
             ]);
+
+            event(new PostUpdated($post));
         });
     }
 

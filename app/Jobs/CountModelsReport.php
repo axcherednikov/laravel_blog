@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Events\CreateAdminReport;
 use App\Exports\Export;
 use App\Mail\ReportsCreate;
 use Illuminate\Bus\Queueable;
@@ -20,10 +21,14 @@ class CountModelsReport implements ShouldQueue
 
     const NAME_TRANS_FILE = 'models';
 
-    public function __construct(public array $models, public string $emailUser) { }
+    public function __construct(public array $models, public string $emailUser)
+    {
+    }
 
     public function handle()
     {
+        event(new CreateAdminReport($this->generateMessage()));
+
         Mail::to($this->emailUser)
             ->send(new ReportsCreate($this->generateMessage(), $this->generatePathFile()));
     }
@@ -54,6 +59,6 @@ class CountModelsReport implements ShouldQueue
 
     private function getNameModel($model): array|string|Translator|Application|null
     {
-        return trans( self::NAME_TRANS_FILE . '.' . $model);
+        return trans(self::NAME_TRANS_FILE . '.' . $model);
     }
 }
