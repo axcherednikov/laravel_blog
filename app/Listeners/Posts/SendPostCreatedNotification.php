@@ -21,6 +21,6 @@ class SendPostCreatedNotification
             new \App\Mail\Posts\PostCreated($event->post)
         );
 
-        push_all($event->post->title, $event->post->description);
+        //push_all($event->post->title, $event->post->description);
     }
 }
