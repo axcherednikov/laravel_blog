@@ -14,7 +14,7 @@ Echo
     .private('update.post.report')
     .listen('.post.updated', (e) => {
         popupS.alert({
-            title: 'Измененная статья' + e.title,
+            title: 'Измененная статья: ' + e.title,
             content: e.message,
         })
     });
