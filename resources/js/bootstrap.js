@@ -21,6 +21,7 @@ try {
  */
 
 window.axios = require('axios');
+window.popupS = require('popups');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -39,9 +40,10 @@ const APP_CLUSTER = process.env.MIX_PUSHER_APP_CLUSTER;
 const pusher = new Pusher(APP_KEY, {
     cluster: APP_CLUSTER,
     enabledTransports: ['ws'],
-    wsHost: 'lara.learn',
+    wsHost: window.location.hostname,
     wsPort: 6009,
     forceTLS: false,
+    authEndpoint: '/broadcasting/auth',
 });
 
 window.Echo = new Echo({

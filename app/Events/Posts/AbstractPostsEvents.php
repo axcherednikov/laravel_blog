@@ -7,15 +7,7 @@ use App\Models\Post\Post;
 
 abstract class AbstractPostsEvents extends AbstractEvents
 {
-    public Post $post;
-
-    /**
-     * Create a new event instance.
-     *
-     * @param Post $post
-     */
-    public function __construct(Post $post)
+    public function __construct(public Post $post)
     {
-        $this->post = $post;
     }
 }

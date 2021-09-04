@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Posts;
 
 use App\Events\Posts\PostCreated;
 use App\Events\Posts\PostDeleted;
-use App\Events\Posts\PostUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
 use App\Http\Requests\TagRequest;
@@ -66,8 +65,6 @@ class PostsController extends Controller
         $tagService->setTags($post, $tagRequest);
 
         flash('Статья успешно обновлена');
-
-        event(new PostUpdated($post));
 
         return redirect()->route('posts.index');
     }
