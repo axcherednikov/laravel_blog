@@ -101,6 +101,16 @@ class Task extends Model implements HasTags
             ]);
         });
 
+        static::created(function () {
+            \Cache::tags(['tasks'])->flush();
+        });
+        static::updated(function () {
+            \Cache::tags(['tasks'])->flush();
+        });
+        static::deleted(function () {
+            \Cache::tags(['tasks'])->flush();
+        });
+
 //        self::addGlobalScope('onlyNew', function (\Illuminate\Database\Eloquent\Builder $builder) {
 //            $builder->new();
 //        });
