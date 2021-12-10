@@ -3,11 +3,11 @@
 namespace App\Providers;
 
 use App\Models\Post\Post;
+use App\Models\Task\Step;
+use App\Models\Task\Task;
 use App\Policies\PostPolicy;
 use App\Policies\StepPolicy;
 use App\Policies\TaskPolicy;
-use App\Models\Task\Step;
-use App\Models\Task\Task;
 use Illuminate\Contracts\Auth\Access\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -34,7 +34,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        $gate->before(function ($user) {
+        $gate->before(function($user) {
             if ($user->isAdmin()) {
                 return true;
             }

@@ -17,8 +17,6 @@ class PostsSeeder extends Seeder
     {
         Post::factory()
             ->count(5)
-            ->create()->each(function (Post $post) {
-                $post->tags()->sync(Tag::pluck('id')->random(rand(1, 7)));
-            });
+            ->create()->each(fn(Post $post) => $post->tags()->sync(Tag::pluck('id')->random(rand(1, 7))));
     }
 }

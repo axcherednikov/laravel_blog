@@ -22,7 +22,7 @@ class PostRequest extends FormRequest
     {
         if (empty($this->input('slug'))) {
             $this->merge([
-                'slug' => Str::slug($this->input('title'))
+                'slug' => Str::slug($this->input('title')),
             ]);
         }
 

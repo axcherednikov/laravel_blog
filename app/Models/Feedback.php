@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\Models\Feedback
+ * App\Models\Feedback.
  *
  * @property int $id
  * @property string $email
@@ -27,5 +29,8 @@ class Feedback extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['email', 'message'];
+    protected $fillable = [
+        'email',
+        'message',
+    ];
 }

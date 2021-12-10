@@ -3,7 +3,6 @@
 namespace Database\Factories\News;
 
 use App\Models\News\News;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class NewsFactory extends Factory

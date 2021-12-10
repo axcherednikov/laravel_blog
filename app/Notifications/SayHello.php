@@ -45,9 +45,9 @@ class SayHello extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
-                    ->subject($this->subject)
-                    ->line('Привет ' . $notifiable->name);
+        return (new MailMessage())
+            ->subject($this->subject)
+            ->line('Привет ' . $notifiable->name);
     }
 
     /**

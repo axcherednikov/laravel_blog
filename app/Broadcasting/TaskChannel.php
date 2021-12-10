@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Broadcasting;
 
 use App\Models\Task\Task;
@@ -9,17 +11,9 @@ class TaskChannel
 {
     public function __construct()
     {
-        //
     }
 
-    /**
-     * Authenticate the user's access to the channel.
-     *
-     * @param  User  $user
-     * @param  Task  $task
-     * @return bool
-     */
-    public function join(User $user, Task $task)
+    function join(User $user, Task $task): bool
     {
         return $user->id == $task->owner_id;
     }

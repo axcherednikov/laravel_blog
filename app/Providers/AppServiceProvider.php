@@ -9,8 +9,8 @@ use App\Models\Task\Step;
 use App\Models\Task\Task;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -41,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->composer('layout.sidebar', function ($view) {
+        view()->composer('layout.sidebar', function($view) {
             $view->with('tagsTaskCloud', Tag::tagsTaskCloud());
             $view->with('tagsPostCloud', Tag::tagsPostCloud());
             $view->with('tagsNewsCloud', Tag::tagsNewsCloud());

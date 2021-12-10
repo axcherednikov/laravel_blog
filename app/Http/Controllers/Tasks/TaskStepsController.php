@@ -12,7 +12,7 @@ class TaskStepsController extends Controller
     public function store(Task $task, TagRequest $tagRequest, TagService $tagService)
     {
         $step = $task->addStep(request()->validate([
-            'description' => 'required|min:5'
+            'description' => 'required|min:5',
         ]));
 
         $tagService->setTags($step, $tagRequest);

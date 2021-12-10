@@ -4,7 +4,9 @@ namespace App\Mail;
 
 class ReportsCreate extends AbstractEmails
 {
-    public function __construct(public string $reports, public array $pathToFile) { }
+    public function __construct(public string $reports, public array $pathToFile)
+    {
+    }
 
     public function build()
     {

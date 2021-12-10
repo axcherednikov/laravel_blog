@@ -23,7 +23,6 @@ class NewPosts extends Notification
         public string $countPeriod,
         public string $subject = 'Уведомление о новых статьях'
     ) {
-
     }
 
     /**
@@ -45,11 +44,11 @@ class NewPosts extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
+        return (new MailMessage())
             ->subject($this->subject)
             ->markdown('mail.posts.new-posts', [
                 'posts' => $this->posts,
-                'countPeriod' => $this->countPeriod
+                'countPeriod' => $this->countPeriod,
             ]);
     }
 

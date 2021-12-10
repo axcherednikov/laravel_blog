@@ -12,7 +12,6 @@ use App\Services\TagService;
 
 class PostsController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth')->except(['index', 'show']);

@@ -4,11 +4,14 @@ namespace App\Models\Task;
 
 use App\Models\Contracts\HasTags;
 use App\Models\Tag\Tag;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 /**
- * App\Models\Task\Step
+ * App\Models\Task\Step.
  *
  * @property int $id
  * @property int $task_id
@@ -19,15 +22,16 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \Illuminate\Database\Eloquent\Collection|Tag[] $tags
  * @property-read int|null $tags_count
  * @property-read \App\Models\Task\Task $task
- * @method static \Illuminate\Database\Eloquent\Builder|Step newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Step newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Step query()
- * @method static \Illuminate\Database\Eloquent\Builder|Step whereCompleted($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Step whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Step whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Step whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Step whereTaskId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Step whereUpdatedAt($value)
+ * @method static \Database\Factories\Task\StepFactory factory(...$parameters)
+ * @method static Builder|Step newModelQuery()
+ * @method static Builder|Step newQuery()
+ * @method static Builder|Step query()
+ * @method static Builder|Step whereCompleted($value)
+ * @method static Builder|Step whereCreatedAt($value)
+ * @method static Builder|Step whereDescription($value)
+ * @method static Builder|Step whereId($value)
+ * @method static Builder|Step whereTaskId($value)
+ * @method static Builder|Step whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class Step extends Model implements HasTags
@@ -36,7 +40,7 @@ class Step extends Model implements HasTags
 
     protected $guarded = [];
 
-    public function task()
+    public function task(): BelongsTo
     {
         return $this->belongsTo(Task::class);
     }
@@ -51,7 +55,7 @@ class Step extends Model implements HasTags
         $this->complete(false);
     }
 
-    public function tags()
+    public function tags(): MorphToMany
     {
         return $this->morphToMany(Tag::class, 'taggable');
     }

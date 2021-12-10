@@ -22,34 +22,19 @@ class SayHello extends Command
      *
      * @var string
      */
-    protected $signature = 'app:say_hello 
-        {users?* : Пользователи} 
-        {--s|subject=Hello : Заголовк письма} 
+    protected $signature = 'app:say_hello
+        {users?* : Пользователи}
+        {--s|subject=Hello : Заголовок письма}
         {--c|class : Преобразовать в имя класса}
     ';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Отправить привет пользователю';
 
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         parent::__construct();
     }
 
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
     public function handle(): int
     {
         if (app()->environment() == 'local') {

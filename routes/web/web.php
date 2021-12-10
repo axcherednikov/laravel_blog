@@ -48,13 +48,13 @@ Route::resource('/news', '\App\Http\Controllers\News\NewsController')->only('ind
 // Route Auth
 Auth::routes();
 
-Route::post('/companies', function () {
+Route::post('/companies', function() {
     auth()->user()->company()->create(request()->validate(['name' => 'required']));
 })->middleware('auth');
 
 Route::get('/service', [PushServiceController::class, 'form'])->name('service.form');
 Route::post('/service', [PushServiceController::class, 'send'])->name('service.send');
 
-Route::post('/chat', function () {
+Route::post('/chat', function() {
     broadcast(new ChatMessage(request('message'), auth()->user()))->toOthers();
 })->middleware('auth');
