@@ -9,57 +9,21 @@ use App\Models\Comment\Comment;
 use App\Models\Contracts\HasTags;
 use App\Models\Tag\Tag;
 use App\Models\User;
-use Database\Factories\Post\PostFactory;
-use Eloquent;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
+use App\Traits\HasFlushTagCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Carbon;
 
-/**
- * App\Models\Post\Post.
- *
- * @property int $id
- * @property int $owner_id
- * @property string $slug
- * @property string $title
- * @property string $description
- * @property string $body
- * @property int $publish
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property-read Collection|Comment[] $comments
- * @property-read int|null $comments_count
- * @property-read Collection|User[] $history
- * @property-read int|null $history_count
- * @property-read Collection|Tag[] $tags
- * @property-read int|null $tags_count
- * @method static PostFactory factory(...$parameters)
- * @method static Builder|Post newModelQuery()
- * @method static Builder|Post newQuery()
- * @method static Builder|Post query()
- * @method static Builder|Post unpublished()
- * @method static Builder|Post whereBody($value)
- * @method static Builder|Post whereCreatedAt($value)
- * @method static Builder|Post whereDescription($value)
- * @method static Builder|Post whereId($value)
- * @method static Builder|Post whereOwnerId($value)
- * @method static Builder|Post wherePublish($value)
- * @method static Builder|Post whereSlug($value)
- * @method static Builder|Post whereTitle($value)
- * @method static Builder|Post whereUpdatedAt($value)
- * @mixin Eloquent
- */
 class Post extends Model implements HasTags
 {
-    use HasFactory;
+    use HasFactory, HasFlushTagCache;
 
     protected $guarded = [];
+
+    protected static array $tagsCache = ['posts'];
 
     protected static function boot()
     {

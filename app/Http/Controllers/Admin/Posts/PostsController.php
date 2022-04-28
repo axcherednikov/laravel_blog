@@ -7,12 +7,16 @@ use App\Http\Requests\PostRequest;
 use App\Http\Requests\TagRequest;
 use App\Models\Post\Post;
 use App\Services\TagService;
+use Illuminate\Support\Facades\Cache;
 
 class PostsController extends Controller
 {
     public function index()
     {
-        $posts = Post::latest('id')->simplePaginate(20);
+        $posts = Cache::tags(['posts'])->rememberForever(
+            'posts_all_admin',
+            fn () => Post::latest('id')->simplePaginate(20)
+        );
 
         return view('admin.posts.index', compact('posts'));
     }

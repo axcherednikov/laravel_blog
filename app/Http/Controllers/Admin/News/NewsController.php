@@ -13,12 +13,16 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Cache;
 
 class NewsController extends Controller
 {
     public function index(): Factory|View|Application
     {
-        $news = News::latest()->simplePaginate(20);
+        $news = Cache::tags(['news'])->rememberForever(
+            'news_all_admin',
+            fn() => News::latest()->simplePaginate(20)
+        );
 
         return view('admin.news.index', compact('news'));
     }
@@ -39,13 +43,22 @@ class NewsController extends Controller
         return redirect()->route('admin.news.index');
     }
 
-    public function edit(News $news): Factory|View|Application
+    public function edit(int $id): Factory|View|Application
     {
+        $news = Cache::tags(['news'])->rememberForever(
+            'news_admin_id_' . $id,
+            fn () => News::findOrFail($id)
+        );
+
         return view('admin.news.edit', compact('news'));
     }
 
-    public function update(News $news, NewsRequest $newsRequest, TagRequest $tagRequest, TagService $tagService): RedirectResponse
-    {
+    public function update(
+        News $news,
+        NewsRequest $newsRequest,
+        TagRequest $tagRequest,
+        TagService $tagService
+    ): RedirectResponse {
         $news->update($newsRequest->validated());
 
         $tagService->setTags($news, $tagRequest);

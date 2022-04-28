@@ -2,6 +2,7 @@
 
 use App\Events\ChatMessage;
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\News\NewsController;
 use App\Http\Controllers\Posts\CommentsController;
 use App\Http\Controllers\Posts\PostsController;
 use App\Http\Controllers\PushServiceController;
@@ -28,7 +29,7 @@ Route::post('/posts/comments/{post}', [CommentsController::class, 'store'])->nam
 Route::delete('/posts/comments/{comment}', [\App\Http\Controllers\Comments\CommentsController::class, 'destroy'])
     ->name('posts.comment.destroy');
 
-Route::resource('/posts', '\App\Http\Controllers\Posts\PostsController');
+Route::resource('/posts', PostsController::class);
 
 // Route Tasks
 Route::get('/tasks/tags/{tag}', [TagsController::class, 'index'])->name('tasks.tags.index');
@@ -37,13 +38,14 @@ Route::post('/completed-steps/{step}', [CompletedStepsController::class, 'store'
 Route::delete('/completed-steps/{step}', [CompletedStepsController::class, 'destroy'])->name('completed-steps.destroy');
 Route::resource('/tasks', '\App\Http\Controllers\Tasks\TasksController');
 
+Route::get('/news', [NewsController::class, 'index'])->name('news.index');
+Route::get('/news/{news}', [NewsController::class, 'show'])->name('news.show');
+
 //Route news
 Route::post('/news/comments/{news}', [\App\Http\Controllers\News\CommentsController::class, 'store'])
     ->name('news.comments.store');
 Route::delete('/news/comments/{comment}', [\App\Http\Controllers\Comments\CommentsController::class, 'destroy'])
     ->name('news.comments.destroy');
-
-Route::resource('/news', '\App\Http\Controllers\News\NewsController')->only('index', 'show');
 
 // Route Auth
 Auth::routes();
