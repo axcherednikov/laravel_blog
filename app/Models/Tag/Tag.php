@@ -1,81 +1,64 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Tag;
 
 use App\Models\News\News;
 use App\Models\Post\Post;
 use App\Models\Task\Step;
 use App\Models\Task\Task;
+use App\Traits\HasFlushTagCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Support\Collection;
 
-/**
- * App\Models\Tag\Tag
- *
- * @property int $id
- * @property string $name
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|Post[] $posts
- * @property-read int|null $posts_count
- * @property-read \Illuminate\Database\Eloquent\Collection|Step[] $steps
- * @property-read int|null $steps_count
- * @property-read \Illuminate\Database\Eloquent\Collection|Task[] $tasks
- * @property-read int|null $tasks_count
- * @method static \Illuminate\Database\Eloquent\Builder|Tag newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Tag newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Tag query()
- * @method static \Illuminate\Database\Eloquent\Builder|Tag whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Tag whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Tag whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Tag whereUpdatedAt($value)
- * @mixin \Eloquent
- * @property-read \Illuminate\Database\Eloquent\Collection|News[] $news
- * @property-read int|null $news_count
- */
 class Tag extends Model
 {
-    use HasFactory;
+    use HasFactory, HasFlushTagCache;
 
     protected $guarded = [];
 
-    public function getRouteKeyName()
+    protected static array $tagsCache = ['tags'];
+
+    public function getRouteKeyName(): string
     {
         return 'name';
     }
 
-    public function posts()
+    public function posts(): MorphToMany
     {
         return $this->morphedByMany(Post::class, 'taggable');
     }
 
-    public function tasks()
+    public function tasks(): MorphToMany
     {
         return $this->morphedByMany(Task::class, 'taggable');
     }
 
-    public function steps()
+    public function steps(): MorphToMany
     {
         return $this->morphedByMany(Step::class, 'taggable');
     }
 
-    public function news()
+    public function news(): MorphToMany
     {
         return $this->morphedByMany(News::class, 'taggable');
     }
 
-    public static function tagsTaskCloud()
+    public static function tagsTaskCloud(): \Illuminate\Database\Eloquent\Collection|array|Collection
     {
-        return (new static)->has('tasks')->get();
+        return (new static())->has('tasks')->get();
     }
 
-    public static function tagsPostCloud()
+    public static function tagsPostCloud(): \Illuminate\Database\Eloquent\Collection|array|Collection
     {
-        return (new static)->has('posts')->get();
+        return (new static())->has('posts')->get();
     }
 
-    public static function tagsNewsCloud()
+    public static function tagsNewsCloud(): \Illuminate\Database\Eloquent\Collection|array|Collection
     {
-        return (new static)->has('news')->get();
+        return (new static())->has('news')->get();
     }
 }

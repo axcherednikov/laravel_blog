@@ -1,46 +1,56 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Task;
 
+use App\Events\TaskCreated;
 use App\Events\TaskUpdated;
 use App\Models\Company;
 use App\Models\Contracts\HasTags;
 use App\Models\Tag\Tag;
 use App\Models\User;
-use App\Events\TaskCreated;
+use Database\Factories\Task\TaskFactory;
+use datetime;
+use Eloquent;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Carbon;
 
 /**
- * App\Models\Task\Task
+ * App\Models\Task\Task.
  *
  * @property int $id
  * @property int $owner_id
  * @property string $title
  * @property string $body
  * @property bool $completed
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
  * @property string $type
- * @property \datetime $viewed_at
+ * @property datetime $viewed_at
  * @property array|null $options
+ * @property-read Company|null $company
  * @property-read mixed $double_type
- * @property-read \Illuminate\Database\Eloquent\Collection|User[] $history
+ * @property-read Collection|User[] $history
  * @property-read int|null $history_count
  * @property-read User $owner
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Task\Step[] $steps
+ * @property-read Collection|Step[] $steps
  * @property-read int|null $steps_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Task\Tag[] $tags
+ * @property-read Collection|Tag[] $tags
  * @property-read int|null $tags_count
+ * @method static TaskFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Task incomplete()
  * @method static \Illuminate\Database\Eloquent\Builder|Task new()
  * @method static \Illuminate\Database\Eloquent\Builder|Task newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Task newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Task ofType(string $type)
- * @method static \Illuminate\Database\Query\Builder|Task onlyTrashed()
+ * @method static Builder|Task onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Task query()
  * @method static \Illuminate\Database\Eloquent\Builder|Task whereBody($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Task whereCompleted($value)
@@ -53,10 +63,9 @@ use Illuminate\Support\Arr;
  * @method static \Illuminate\Database\Eloquent\Builder|Task whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Task whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Task whereViewedAt($value)
- * @method static \Illuminate\Database\Query\Builder|Task withTrashed()
- * @method static \Illuminate\Database\Query\Builder|Task withoutTrashed()
- * @mixin \Eloquent
- * @property-read Company|null $company
+ * @method static Builder|Task withTrashed()
+ * @method static Builder|Task withoutTrashed()
+ * @mixin Eloquent
  */
 class Task extends Model implements HasTags
 {
@@ -92,23 +101,13 @@ class Task extends Model implements HasTags
     {
         parent::boot();
 
-        static::updating(function (Task $task) {
+        static::updating(function(Task $task) {
             $after = $task->getDirty();
 
             $task->history()->attach(auth()->id(), [
                 'before' => json_encode(Arr::only($task->fresh()->toArray(), array_keys($after))),
                 'after'  => json_encode($after),
             ]);
-        });
-
-        static::created(function () {
-            \Cache::tags(['tasks'])->flush();
-        });
-        static::updated(function () {
-            \Cache::tags(['tasks'])->flush();
-        });
-        static::deleted(function () {
-            \Cache::tags(['tasks'])->flush();
         });
 
 //        self::addGlobalScope('onlyNew', function (\Illuminate\Database\Eloquent\Builder $builder) {

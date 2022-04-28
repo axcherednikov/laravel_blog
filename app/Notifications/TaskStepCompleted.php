@@ -3,7 +3,6 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -40,7 +39,7 @@ class TaskStepCompleted extends Notification
      */
     public function toMail(mixed $notifiable): MailMessage
     {
-        return (new MailMessage)
+        return (new MailMessage())
             ->subject('Шаг выполнен')
             ->line('The introduction to the notification.')
             ->action('Перейти на сайт', url('/'));

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs;
 
 use App\Events\CreateAdminReport;
@@ -19,7 +21,7 @@ class CountModelsReport implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    const NAME_TRANS_FILE = 'models';
+    public const NAME_TRANS_FILE = 'models';
 
     public function __construct(public array $models, public string $emailUser)
     {

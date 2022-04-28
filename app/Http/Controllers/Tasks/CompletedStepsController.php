@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Tasks;
 
 use App\Http\Controllers\Controller;
-use App\Notifications\TaskStepCompleted;
 use App\Models\Task\Step;
+use App\Notifications\TaskStepCompleted;
 
 class CompletedStepsController extends Controller
 {

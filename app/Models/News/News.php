@@ -1,56 +1,37 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\News;
 
 use App\Models\Comment\Comment;
 use App\Models\Contracts\HasTags;
 use App\Models\Tag\Tag;
+use App\Traits\HasFlushTagCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
-/**
- * App\Models\News\News
- *
- * @property int $id
- * @property string $title
- * @property string $slug
- * @property string $description
- * @property int $publish
- * @property string $body
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|News newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|News newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|News query()
- * @method static \Illuminate\Database\Eloquent\Builder|News whereBody($value)
- * @method static \Illuminate\Database\Eloquent\Builder|News whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|News whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|News whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|News wherePublish($value)
- * @method static \Illuminate\Database\Eloquent\Builder|News whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|News whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|News whereUpdatedAt($value)
- * @mixin \Eloquent
- * @property-read \Illuminate\Database\Eloquent\Collection|Tag[] $tags
- * @property-read int|null $tags_count
- */
 class News extends Model implements HasTags
 {
-    use HasFactory;
+    use HasFactory, HasFlushTagCache;
 
     protected $guarded = [];
 
-    public function getRouteKeyName()
+    protected static array $tagsCache = ['news'];
+
+    public function getRouteKeyName(): string
     {
         return 'slug';
     }
 
-    public function tags()
+    public function tags(): MorphToMany
     {
         return $this->morphToMany(Tag::class, 'taggable');
     }
 
-    public function comments()
+    public function comments(): MorphMany
     {
         return $this->morphMany(Comment::class, 'commentable');
     }

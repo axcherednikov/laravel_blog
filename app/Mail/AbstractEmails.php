@@ -3,8 +3,8 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
 
 abstract class AbstractEmails extends Mailable
 {

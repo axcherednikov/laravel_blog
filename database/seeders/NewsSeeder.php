@@ -17,8 +17,6 @@ class NewsSeeder extends Seeder
     {
         News::factory()
             ->count(10)
-            ->create()->each(function (News $news) {
-                $news->tags()->sync(Tag::pluck('id')->random(rand(1, 5)));
-            });
+            ->create()->each(fn(News $news) => $news->tags()->sync(Tag::pluck('id')->random(rand(1, 5))));
     }
 }

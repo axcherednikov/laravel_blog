@@ -6,11 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\TagRequest;
 use App\Models\Task\Task;
 use App\Services\TagService;
-use Cache;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Cache;
 
 class TasksController extends Controller
 {
@@ -22,15 +22,26 @@ class TasksController extends Controller
 
     public function index(): Factory|View|Application
     {
-        $tasks = Cache::tags(['tasks'])->remember('user_tasks|' . auth()->id(), 3600, function () {
-            return auth()->user()->tasks()->with('tags')->latest()->simplePaginate(3);
-        });
+        $tasks = Cache::tags(['tasks', 'tags'])->rememberForever(
+            'tasks_tags_all',
+            fn() => auth()
+                ->user()
+                ->tasks()
+                ->with('tags')
+                ->latest()
+                ->simplePaginate(3)
+        );
 
         return view('tasks.index', compact('tasks'));
     }
 
-    public function show(Task $task): Factory|View|Application
+    public function show(int $id): Factory|View|Application
     {
+        $task = Cache::tags(['tasks'])->rememberForever(
+            'tasks_id_' . $id,
+            fn() => Task::findOrFail($id)
+        );
+
         return view('tasks.show', compact('task'));
     }
 

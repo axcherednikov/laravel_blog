@@ -16,14 +16,8 @@ class PostsToUsersSeeder extends Seeder
      */
     public function run()
     {
-        User::factory()
-            ->count(2)
-            ->create()->each(function (User $user) {
-            $user->posts()->saveMany(Post::factory()
-                ->count(10)
-                ->create(['owner_id' => $user])->each(function (Post $post) {
-                    $post->tags()->sync(Tag::pluck('id')->random(rand(1, 5)));
-                }));
-        });
+        User::factory()->count(2)->create()->each(fn(User $user) => $user->posts()->saveMany(Post::factory()
+            ->count(10)
+            ->create(['owner_id' => $user])->each(fn(Post $post) => $post->tags()->sync(Tag::pluck('id')->random(rand(1, 5))))));
     }
 }

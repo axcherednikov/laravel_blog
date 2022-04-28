@@ -8,7 +8,9 @@ class PushAll
 {
     protected string $url = 'https://pushall.ru/api.php';
 
-    public function __construct(private string $apiKey, private string $id) { }
+    public function __construct(private string $apiKey, private string $id)
+    {
+    }
 
     public function send(string $title, string $text)
     {

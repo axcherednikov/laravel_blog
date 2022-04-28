@@ -9,10 +9,10 @@ use App\Http\Requests\PostRequest;
 use App\Http\Requests\TagRequest;
 use App\Models\Post\Post;
 use App\Services\TagService;
+use Illuminate\Support\Facades\Cache;
 
 class PostsController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth')->except(['index', 'show']);
@@ -21,13 +21,21 @@ class PostsController extends Controller
 
     public function index()
     {
-        $posts = Post::latest()->paginate(10);
+        $posts = Cache::tags(['posts'])->rememberForever(
+            'posts_all',
+            fn() => Post::latest()->paginate(10)
+        );
 
         return view('posts.index', compact('posts'));
     }
 
-    public function show(Post $post)
+    public function show(string $post)
     {
+        $post = Cache::tags(['posts'])->rememberForever(
+            'posts_slug_' . $post,
+            fn() => Post::whereSlug($post)->firstOrFail()
+        );
+
         return view('posts.show', compact('post'));
     }
 

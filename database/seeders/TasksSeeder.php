@@ -24,15 +24,22 @@ class TasksSeeder extends Seeder
                 ->create()->each(function (Task $task) {
                     $task->tags()->sync(Tag::pluck('id')->random(rand(1, 6)));
 
-                    $task->steps()->saveMany(Step::factory()->count(rand(2, 6))->create()->each(function (Step $step) {
-                        $step->tags()->sync(Tag::pluck('id')->random(rand(1, 4)));
-                    }));
+                    $task->steps()
+                        ->saveMany(
+                            Step::factory()
+                                ->count(rand(2, 6))
+                                ->create()
+                                ->each(fn(Step $step) => $step
+                                    ->tags()
+                                    ->sync(
+                                        Tag::pluck('id')->random(rand(1, 4))
+                                    )
+                                )
+                        );
                 }));
 
         Task::factory()
             ->count(5)
-            ->create()->each(function (Task $task) {
-                $task->tags()->sync(Tag::pluck('id')->random(rand(1, 7)));
-            });
+            ->create()->each(fn(Task $task) => $task->tags()->sync(Tag::pluck('id')->random(rand(1, 7))));
     }
 }

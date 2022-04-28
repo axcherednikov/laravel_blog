@@ -1,12 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
- * App\Models\Image
+ * App\Models\Image.
  *
  * @property int $id
  * @property string $imageable_type
@@ -30,7 +33,7 @@ class Image extends Model
 {
     use HasFactory;
 
-    public function imageable()
+    public function imageable(): MorphTo
     {
         return $this->morphTo();
     }
